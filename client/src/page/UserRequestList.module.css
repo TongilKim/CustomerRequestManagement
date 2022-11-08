@@ -1,0 +1,25 @@
+* {
+  border-radius: 12px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 14px 24px;
+  position: absolute;
+  top: 6px;
+}
+
+.backBtn {
+  margin: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #e8e8e8;
+  text-align: center;
+  padding: 3px;
+  border-radius: 13px;
+  cursor: pointer;
+  font-size: 21px;
+  color: black;
+  font-weight: 600;
+}

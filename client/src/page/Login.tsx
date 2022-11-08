@@ -10,6 +10,14 @@ export default function Login() {
     <Fragment>
       <div className={style.wrapper}>
         <div className={style.container}>
+          <div
+            onClick={() => {
+              navigate("/");
+            }}
+            className={style.backBtn}
+          >
+            {`<`}
+          </div>
           <div className={style.buttonBox}>
             <div
               className={style.activeBtn}
@@ -51,13 +59,6 @@ export default function Login() {
               <button type="submit" className={style.submitButton}>
                 로그인
               </button>
-              <button
-                type="submit"
-                onClick={() => navigate("/")}
-                className={style.submitButton}
-              >
-                취소
-              </button>
             </form>
           ) : (
             <form className={style.registerForm}>
@@ -87,13 +88,6 @@ export default function Login() {
               />
               <button type="submit" className={style.submitButton}>
                 회원가입
-              </button>
-              <button
-                type="submit"
-                onClick={() => navigate("/")}
-                className={style.submitButton}
-              >
-                취소
               </button>
             </form>
           )}

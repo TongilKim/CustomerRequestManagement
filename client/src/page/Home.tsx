@@ -8,23 +8,27 @@ export default function Home() {
 
   return (
     <Fragment>
-      <div className={style.wrapper}>
-        <div className={style.container}>
-          <div className={style.title}>문의 접수</div>
-          <div>
-            <button type="submit" className={style.submitButton}>
-              고객
-            </button>
-            <button
-              type="submit"
-              onClick={() => {
-                navigate("/login");
-              }}
-              className={style.submitButton}
-            >
-              상담사
-            </button>
-          </div>
+      <div className={style.container}>
+        <div className={style.title}>문의 접수</div>
+        <div>
+          <button
+            type="submit"
+            onClick={() => {
+              navigate("/customerOptions");
+            }}
+            className={style.submitButton}
+          >
+            고객
+          </button>
+          <button
+            type="submit"
+            onClick={() => {
+              navigate("/login");
+            }}
+            className={style.submitButton}
+          >
+            상담사
+          </button>
         </div>
       </div>
     </Fragment>
