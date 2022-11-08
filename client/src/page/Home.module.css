@@ -1,0 +1,32 @@
+.container {
+  width: 380px;
+  height: 480px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  color: #ffff;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.submitButton {
+  width: 85%;
+  height: 28%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: #f3c693;
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  margin-top: 20%;
+}

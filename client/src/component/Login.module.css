@@ -1,0 +1,80 @@
+.container {
+  width: 380px;
+  height: 480px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+}
+.buttonBox {
+  width: 220px;
+  margin: 35px auto;
+  position: relative;
+  box-shadow: 0 0 20px 9px #ff61241f;
+  border-radius: 30px;
+}
+.toggleBtn {
+  padding: 10px 33px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
+}
+.activeBtn {
+  top: 0;
+  position: absolute;
+  width: 110px;
+  height: 100%;
+  background: #f3c693;
+  border-radius: 30px;
+  transition: 0.5s;
+}
+.loginForm {
+  top: 150px;
+  position: absolute;
+  width: 280px;
+  transition: 0.5s;
+  left: 50px;
+}
+.loginForm input {
+  color: white;
+  font-size: 15;
+}
+.registerForm {
+  top: 120px;
+  position: absolute;
+  width: 280px;
+  transition: 0.5s;
+  left: 50px;
+}
+.registerForm input {
+  color: white;
+  font-size: 15;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px 0;
+  margin: 5px 0;
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+}
+
+.submitButton {
+  width: 85%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: #f3c693;
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
