@@ -5,6 +5,7 @@ import Login from "./page/Login";
 import { Home } from "./page";
 import CustomerOptions from "./page/CustomerOptions";
 import CustomerRequestList from "./page/CustomerRequestList";
+import CounselorRequestList from "./page/CounselorRequestList";
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
         <Route
           path="/lookupWrittenRequests"
           element={<CustomerRequestList />}
+        ></Route>
+        <Route
+          path="/lookupNewRequests"
+          element={<CounselorRequestList />}
         ></Route>
       </Routes>
     </div>

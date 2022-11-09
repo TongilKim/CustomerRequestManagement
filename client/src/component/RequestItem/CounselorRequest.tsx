@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./RequestItem.module.css";
+import style from "./CounselorRequest.module.css";
 import AdditionSvg from "../../assets/addition.svg";
 import DeleteSvg from "../../assets/delete.svg";
 import ArrowDownSvg from "../../assets/arrow_down.svg";
@@ -8,7 +8,7 @@ import ArrowUpSvg from "../../assets/arrow_up.svg";
 type TProps = {
   answered: boolean;
 };
-export default function RequestItem({ answered }: TProps) {
+export default function CounselorRequest({ answered }: TProps) {
   const [openDetail, setOpenDetail] = useState(false);
 
   return (

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import AnsweredRequestList from "../component/Customer/List/AnsweredRequestList";
-import WrittenRequestList from "../component/Customer/List/WrittenRequestList";
+import RequestList from "../component/RequestList/RequestList";
+import CustomerRequest from "../component/RequestItem/CustomerRequest";
 import style from "./CustomerRequestList.module.css";
 
 export default function CustomerRequestList() {
@@ -18,8 +18,12 @@ export default function CustomerRequestList() {
         {"<"}
       </div>
       <Fragment>
-        <AnsweredRequestList />
-        <WrittenRequestList />
+        <RequestList title="답변한 문의">
+          <CustomerRequest answered={true} />
+        </RequestList>
+        <RequestList title="작성한 문의">
+          <CustomerRequest answered={false} />
+        </RequestList>
       </Fragment>
     </div>
   );

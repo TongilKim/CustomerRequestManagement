@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import CompletedRequestList from "../component/Counselor/List/CompletedRequestList";
-import CustomerRequestList from "../component/Counselor/List/CustomerRequestList";
+import CounselorRequest from "../component/RequestItem/CounselorRequest";
+import RequestList from "../component/RequestList/RequestList";
 import style from "./CustomerRequestList.module.css";
 export default function CounselorRequestList() {
   const navigate = useNavigate();
@@ -17,8 +17,12 @@ export default function CounselorRequestList() {
         {"<"}
       </div>
       <Fragment>
-        <CompletedRequestList />
-        <CustomerRequestList />
+        <RequestList title="답변한 리스트">
+          <CounselorRequest answered={true} />
+        </RequestList>
+        <RequestList title="새로운 문의">
+          <CounselorRequest answered={false} />
+        </RequestList>
       </Fragment>
     </div>
   );

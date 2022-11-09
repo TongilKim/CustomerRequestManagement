@@ -59,6 +59,15 @@ export default function Login() {
               <button type="submit" className={style.submitButton}>
                 로그인
               </button>
+              <button
+                type="submit"
+                onClick={() => {
+                  navigate("/lookupNewRequests");
+                }}
+                className={style.submitButton}
+              >
+                테스트
+              </button>
             </form>
           ) : (
             <form className={style.registerForm}>
