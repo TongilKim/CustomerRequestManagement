@@ -17,10 +17,12 @@ export default function CounselorRequestList() {
         {"<"}
       </div>
       <Fragment>
-        <RequestList title="답변한 리스트">
+        <RequestList title="답변한 문의">
+          <CounselorRequest answered={true} />
           <CounselorRequest answered={true} />
         </RequestList>
         <RequestList title="새로운 문의">
+          <CounselorRequest answered={false} />
           <CounselorRequest answered={false} />
         </RequestList>
       </Fragment>

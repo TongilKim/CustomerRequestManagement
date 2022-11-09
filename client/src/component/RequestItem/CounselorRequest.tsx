@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import style from "./CounselorRequest.module.css";
 import AdditionSvg from "../../assets/addition.svg";
 import DeleteSvg from "../../assets/delete.svg";
 import ArrowDownSvg from "../../assets/arrow_down.svg";
 import ArrowUpSvg from "../../assets/arrow_up.svg";
+import WritingModal from "../Modal/WritingModal";
+import { Role } from "../../type";
 
 type TProps = {
   answered: boolean;
 };
 export default function CounselorRequest({ answered }: TProps) {
   const [openDetail, setOpenDetail] = useState(false);
+  const [openWritingModal, setOpenWritingModal] = useState(false);
+
+  const closeModal = useCallback(() => {
+    setOpenWritingModal(false);
+  }, [openWritingModal]);
 
   return (
     <div className={style.wrapper}>
@@ -18,10 +25,21 @@ export default function CounselorRequest({ answered }: TProps) {
         <div className={style.title}>문의요청 타이틀 입니다.</div>
         <div className={style.optionGroup}>
           {!answered && (
-            <div className={style.addButton} onClick={() => {}}>
-              <img src={DeleteSvg} alt="delete_icon" />
-              삭제
-            </div>
+            <Fragment>
+              <div
+                className={style.addButton}
+                onClick={() => {
+                  setOpenWritingModal(true);
+                }}
+              >
+                <img src={AdditionSvg} alt="delete_icon" />
+                답변
+              </div>
+              <div className={style.addButton}>
+                <img src={AdditionSvg} alt="delete_icon" />
+                담당자 본인 지정
+              </div>
+            </Fragment>
           )}
         </div>
       </div>
@@ -33,7 +51,10 @@ export default function CounselorRequest({ answered }: TProps) {
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
           aliquip ex ea commodo consequat.
         </div>
-        <div className={style.writtenDate}>작성날짜: 2022/11/09</div>
+        <div className={style.writtenDate}>
+          <div>고객 아이디: kkimtt</div>
+          <div>작성날짜: 2022/11/09</div>
+        </div>
       </div>
       {answered && (
         <div
@@ -58,6 +79,9 @@ export default function CounselorRequest({ answered }: TProps) {
           <div className={style.answeredDate}>상담사: 김통일</div>
           <div className={style.answeredDate}>작성날짜: 2022/11/09</div>
         </div>
+      )}
+      {openWritingModal && (
+        <WritingModal role={Role.CounselorRole} closeModal={closeModal} />
       )}
     </div>
   );

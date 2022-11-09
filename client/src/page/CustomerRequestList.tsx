@@ -18,7 +18,7 @@ export default function CustomerRequestList() {
         {"<"}
       </div>
       <Fragment>
-        <RequestList title="답변한 문의">
+        <RequestList title="답변된 문의">
           <CustomerRequest answered={true} />
         </RequestList>
         <RequestList title="작성한 문의">

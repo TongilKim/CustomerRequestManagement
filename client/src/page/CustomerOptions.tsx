@@ -1,7 +1,8 @@
 import React, { Fragment, useCallback, useState } from "react";
 import style from "./CustomerOptions.module.css";
 import { useNavigate } from "react-router-dom";
-import NewRequestModal from "../component/Modal/NewRequestModal";
+import WritingModal from "../component/Modal/WritingModal";
+import { Role } from "../type";
 
 export default function CustomerOptions() {
   const navigate = useNavigate();
@@ -40,13 +41,17 @@ export default function CustomerOptions() {
             }}
             className={style.submitButton}
           >
-            문의 작성
+            문의 접수
           </button>
         </div>
       </div>
 
       {openNewRequest && (
-        <NewRequestModal closeModal={closeModal} closeModalByOutside={false} />
+        <WritingModal
+          role={Role.CustomerRole}
+          closeModal={closeModal}
+          closeModalByOutside={false}
+        />
       )}
     </Fragment>
   );
