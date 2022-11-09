@@ -2,9 +2,9 @@ import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import AnsweredRequestList from "../component/Customer/List/AnsweredRequestList";
 import WrittenRequestList from "../component/Customer/List/WrittenRequestList";
-import style from "./UserRequestList.module.css";
+import style from "./CustomerRequestList.module.css";
 
-export default function UserRequestList() {
+export default function CustomerRequestList() {
   const navigate = useNavigate();
 
   return (
@@ -18,8 +18,8 @@ export default function UserRequestList() {
         {"<"}
       </div>
       <Fragment>
-        <WrittenRequestList />
         <AnsweredRequestList />
+        <WrittenRequestList />
       </Fragment>
     </div>
   );
