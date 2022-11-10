@@ -11,7 +11,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = { 
-	ServerApplication.class,
+		ServerApplication.class,
 		Jsr310JpaConverters.class 
 })
 public class ServerApplication {
