@@ -37,13 +37,13 @@ public class JwtTokenProvider {
          Map<String, Object> headers = new HashMap<>();
          headers.put("typ", "JWT");
          headers.put("alg", "HS256");
-
+        
         return Jwts.builder()
                 .setHeader(headers) // Headers 설정
                 .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
-                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 

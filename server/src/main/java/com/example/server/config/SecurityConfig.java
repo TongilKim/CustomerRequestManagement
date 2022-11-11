@@ -63,16 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .cors()
                     .and()
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // YOU HAVE TO KEEP THIS FOR BROWSER LOGIN
-                    .and()
-                    // .csrf()
-                    // .disable()    
-                .exceptionHandling()
-                    .authenticationEntryPoint(unauthorizedHandler)
-                    .and()
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .csrf()
+                    .disable()    
+                .headers()
+                    .frameOptions()
+                    .sameOrigin()
+                .and()
                 .authorizeRequests()
                     .antMatchers("/",
                         "/favicon.ico",
@@ -86,12 +82,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                         .permitAll()
                     .antMatchers("/api/auth/**")
                         .permitAll()
+                    .antMatchers("/h2-console/**")
+                        .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                         .permitAll()
                     .antMatchers(HttpMethod.GET,  "/api/users/**")
                         .permitAll()
                     .anyRequest()
-                        .authenticated();
+                        .authenticated()
+                    .and()
+                    .exceptionHandling()
+                        .authenticationEntryPoint(unauthorizedHandler)
+                    .and()
+                        .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                         
 
         // Add our custom JWT security filter
