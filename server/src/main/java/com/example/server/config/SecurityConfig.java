@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.example.server.security.CustomUserDetailsService;
 import com.example.server.security.JwtAuthenticationEntryPoint;
@@ -62,8 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .cors()
                     .and()
-                .csrf()
-                    .disable()
+                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // YOU HAVE TO KEEP THIS FOR BROWSER LOGIN
+                    .and()
+                    // .csrf()
+                    // .disable()    
                 .exceptionHandling()
                     .authenticationEntryPoint(unauthorizedHandler)
                     .and()
@@ -89,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                         .permitAll()
                     .anyRequest()
                         .authenticated();
+                        
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
