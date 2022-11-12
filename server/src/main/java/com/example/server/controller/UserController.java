@@ -21,11 +21,11 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/user/checkUsernameAvailability")
-    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
-        Boolean isAvailable = !userRepository.existsByUsername(username);
-        return new UserIdentityAvailability(isAvailable);
-    }
+    // @GetMapping("/user/checkUsernameAvailability")
+    // public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
+    //     Boolean isAvailable = !userRepository.existsByUsername(username);
+    //     return new UserIdentityAvailability(isAvailable);
+    // }
 
     @GetMapping("/user/checkEmailAvailability")
     public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {

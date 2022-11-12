@@ -2,14 +2,15 @@
   width: 380px;
   height: 480px;
   position: relative;
-  background: rgba(0, 0, 0, 0.2);
+  background: #333333;
   overflow: hidden;
+  border-radius: 6px;
 }
 .buttonBox {
   width: 220px;
   margin: 35px auto;
   position: relative;
-  box-shadow: 0 0 20px 9px #ff61241f;
+  box-shadow: 0 0 20px 0px #f3c693;
   border-radius: 30px;
 }
 .toggleBtn {
@@ -19,6 +20,8 @@
   border: 0;
   outline: none;
   position: relative;
+  color: white;
+  font-weight: bold;
 }
 .activeBtn {
   top: 0;
@@ -76,6 +79,9 @@
   border-radius: 30px;
   margin-top: 20px;
   margin-bottom: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
 }
 .backBtn {
   margin: 20px;
@@ -85,4 +91,8 @@
   padding: 3px;
   border-radius: 13px;
   cursor: pointer;
+}
+.helperText {
+  color: red;
+  font-size: 11px;
 }

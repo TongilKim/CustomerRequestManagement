@@ -49,6 +49,7 @@ type SignIn = {
   usernameOrEmail: string;
   password: string;
 };
+
 export const signInAPI = async (signInParam: SignIn) => {
   let data = null;
   let headers = getHeaderInfo();
@@ -85,4 +86,29 @@ export const signInAPI = async (signInParam: SignIn) => {
     data = null;
   }
   return data;
+};
+
+export const checkEmailAvailabilityAPI = async (email: string) => {
+  let exist = false;
+  let headers = getHeaderInfo();
+
+  try {
+    await fetch(`${API_BASE_URL}/user/checkEmailAvailability?email=${email}`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((res: { available: boolean }) => {
+        console.log("res: ", res);
+        exist = res.available;
+      });
+  } catch (e) {
+    exist = false;
+  }
+  console.log("exist: ", exist);
+  return exist;
+  // return request({
+  //   url: API_BASE_URL + "/user/checkEmailAvailability?email=" + email,
+  //   method: "GET",
+  // });
 };

@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 
 import style from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
+import { CheckSessionAvailability } from "../utils";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,7 +24,12 @@ export default function Home() {
           <button
             type="submit"
             onClick={() => {
-              navigate("/login");
+              const loggedIn = CheckSessionAvailability();
+              if (loggedIn) {
+                navigate("/lookupNewRequests");
+              } else {
+                navigate("/login");
+              }
             }}
             className={style.submitButton}
           >

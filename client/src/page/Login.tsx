@@ -1,10 +1,11 @@
 import React, { Fragment, useCallback, useState } from "react";
 import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
-import { signInAPI, signUpAPI } from "../api";
+import { checkEmailAvailabilityAPI, signInAPI, signUpAPI } from "../api";
 import { ACCESS_TOKEN } from "../constants";
 import { useAppDispatch } from "../store/hooks";
 import { setOpenSnackBar, setSnackBarMsg } from "../store/slice/SnackBarSlice";
+import ValidateEmail from "../utils/ValidateEmail";
 
 export default function Login() {
   // STORE STATE
@@ -15,15 +16,40 @@ export default function Login() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userConfirmPassword, setUserConfirmPassword] = useState("");
+  const [emailErrorMsg, setEmailErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
   const validatePassword = () => {
     return userPassword === userConfirmPassword;
   };
+
+  const validateEmailInput = useCallback(
+    (email: string) => {
+      const result = ValidateEmail(email);
+      if (result.validateStatus !== "good") {
+        setEmailErrorMsg(result.errorMsg);
+      } else {
+        setEmailErrorMsg("");
+      }
+    },
+    [userEmail]
+  );
+
+  const validateEmailDuplicate = useCallback(async () => {
+    if (emailErrorMsg.length === 0 && userEmail.length > 0) {
+      const emailExist = await checkEmailAvailabilityAPI(userEmail);
+      console.log("emailExist: ");
+      if (!emailExist) {
+        setEmailErrorMsg("이미 존재하는 이메일 입니다!");
+      }
+    }
+  }, [userEmail]);
+
   const onClickSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const passwordValidated = validatePassword();
+
     if (passwordValidated) {
       signUpAPI({
         username: userName,
@@ -138,15 +164,6 @@ export default function Login() {
               <button type="submit" className={style.submitButton}>
                 로그인
               </button>
-              <button
-                type="submit"
-                onClick={() => {
-                  navigate("/lookupNewRequests");
-                }}
-                className={style.submitButton}
-              >
-                테스트
-              </button>
             </form>
           ) : (
             <form
@@ -168,11 +185,19 @@ export default function Login() {
                 className={style.inputField}
                 placeholder="E-mail"
                 value={userEmail}
+                onBlur={() => {
+                  validateEmailDuplicate();
+                }}
                 onChange={(e) => {
+                  validateEmailInput(e.target.value);
                   setUserEmail(e.target.value);
                 }}
                 required
               />
+              {emailErrorMsg.length > 0 && (
+                <div className={style.helperText}>{emailErrorMsg}</div>
+              )}
+
               <input
                 type="password"
                 className={style.inputField}
