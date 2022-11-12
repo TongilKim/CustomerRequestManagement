@@ -6,8 +6,13 @@ import { Home } from "./page";
 import CustomerOptions from "./page/CustomerOptions";
 import CustomerRequestList from "./page/CustomerRequestList";
 import CounselorRequestList from "./page/CounselorRequestList";
+import Snackbar from "./common/Snackbar";
+import { useAppSelector } from "./store/hooks";
 
 function App() {
+  //STORE STATE
+  const { openSnackBar } = useAppSelector((state) => state.snackBar);
+
   return (
     <div className="App">
       <Routes>
@@ -23,6 +28,7 @@ function App() {
           element={<CounselorRequestList />}
         ></Route>
       </Routes>
+      {openSnackBar ? <Snackbar /> : null}
     </div>
   );
 }

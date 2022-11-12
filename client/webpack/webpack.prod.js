@@ -5,7 +5,7 @@ module.exports = {
   devtool: "source-map",
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.name": JSON.stringify("tongil-PROD"),
+      "process.env.baseURL": JSON.stringify("http://localhost:5050/api"),
     }),
   ],
 };

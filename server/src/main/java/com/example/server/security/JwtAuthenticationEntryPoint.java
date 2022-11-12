@@ -20,6 +20,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse httpServletResponse,
                          AuthenticationException e) throws IOException, ServletException {
         logger.error("Responding with unauthorized error. Message - {}", e.getMessage());
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+        
+        return new ResponseEntity(new ApiResponse(false, "입력 하신 정보가 옳지 않습니다."),
+        HttpStatus.BAD_REQUEST);
     }
 }
