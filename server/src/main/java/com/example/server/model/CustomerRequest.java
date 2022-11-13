@@ -24,6 +24,12 @@ public class CustomerRequest {
     @NotNull
     private String customerId;
 
+    @Value("")
+    private Long counselorId;
+    
+    @Value("")
+    private String counselorName;
+
     @Value("false")
     private Boolean deleted;
 
@@ -65,6 +71,22 @@ public class CustomerRequest {
         this.customerId = customerId;
     }
 
+    public Long getCounselorId() {
+        return counselorId;
+    }
+
+    public void setCounselorId(Long counselorId) {
+        this.counselorId = counselorId;
+    }
+
+    public String getCounselorName() {
+        return counselorName;
+    }
+
+    public void setCounselorName(String counselorName) {
+        this.counselorName = counselorName;
+    }
+
     public Boolean getDeleted() {
         return deleted;
     }
@@ -89,6 +111,5 @@ public class CustomerRequest {
         this.createdDateTime = createdDateTime;
     }
 
-    
 
 }

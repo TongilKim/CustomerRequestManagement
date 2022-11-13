@@ -3,6 +3,7 @@ package com.example.server.service;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,23 @@ public class CustomerRequestService {
             logger.info("삭제 하려는 데이터가 존재하지 않습니다. REQUEST ID = {}", requestId);
             return false;
         }
-        
+    }
+
+    public Boolean updateCustomerRequestSelected(Long requestId, String currentUserName, Long currentUserId) {
+        try {
+            CustomerRequest customerRequestToUpdate = customerRequestRepository.findById(requestId).orElse(null);;
+            
+            if(customerRequestToUpdate != null) {
+                customerRequestToUpdate.setPending(true);
+                customerRequestToUpdate.setCounselorId(currentUserId);
+                customerRequestToUpdate.setCounselorName(currentUserName);
+                
+                customerRequestRepository.save(customerRequestToUpdate);
+            }
+            return true;
+        }catch(EmptyResultDataAccessException error) {
+            logger.info("업데이트 하려는 데이터가 존재하지 않습니다. REQUEST ID = {}", requestId);
+            return false;
+        }
     }
 }

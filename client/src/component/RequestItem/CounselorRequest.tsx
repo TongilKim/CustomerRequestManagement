@@ -5,6 +5,7 @@ import ArrowDownSvg from "../../assets/arrow_down.svg";
 import ArrowUpSvg from "../../assets/arrow_up.svg";
 import WritingModal from "../Modal/WritingModal";
 import { Role, TCustomerRequest } from "../../type";
+import { assignCustomerRequestAPI } from "../../api";
 
 type TProps = {
   answered: boolean;
@@ -18,6 +19,10 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
   const closeModal = useCallback(() => {
     setOpenWritingModal(false);
   }, [openWritingModal]);
+
+  const onClickAssignRequest = (id: number) => {
+    assignCustomerRequestAPI({ requestId: id });
+  };
 
   return (
     <div className={style.wrapper}>
@@ -36,7 +41,10 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
                 <img src={AdditionSvg} alt="delete_icon" />
                 답변
               </div>
-              <div className={style.addButton}>
+              <div
+                className={style.addButton}
+                onClick={() => onClickAssignRequest(data.id)}
+              >
                 <img src={AdditionSvg} alt="delete_icon" />
                 담당자 본인 지정
               </div>

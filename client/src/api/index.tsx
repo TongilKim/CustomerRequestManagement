@@ -189,7 +189,6 @@ export const deleteCustomerRequestAPI = async (param: {
     )
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         data = res;
       });
   } catch (error) {
@@ -197,4 +196,24 @@ export const deleteCustomerRequestAPI = async (param: {
   }
 
   return data;
+};
+
+export const assignCustomerRequestAPI = async (param: {
+  requestId: number;
+}) => {
+  let data = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(
+      `${API_BASE_URL}/customerRequests/updateRequestSelected?requestId=${param.requestId}`,
+      { method: "PUT", headers: headers }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res: ", res);
+      });
+  } catch (error) {
+    data = null;
+  }
 };

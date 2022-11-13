@@ -24,7 +24,11 @@ import com.example.server.model.CustomerRequest;
 import com.example.server.payload.ApiResponse;
 import com.example.server.payload.CustomerRequestRequest;
 import com.example.server.repository.CustomerRequestRepository;
+import com.example.server.security.CurrentUser;
+import com.example.server.security.UserPrincipal;
 import com.example.server.service.CustomerRequestService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/customerRequests")
@@ -82,5 +86,18 @@ public class CustomerRequestController {
         return new ApiResponse(true, "목록이 성공적으로 조회 되었습니다.", allCustomerRequests);
     }
 
+    @PutMapping("/updateRequestSelected")
+    public ApiResponse updateRequestSelected(@CurrentUser UserPrincipal currentUser, 
+                                             @RequestParam(value = "requestId") Long requestId) {
+        
+        Boolean updateStatus = customerRequestService.updateCustomerRequestSelected(requestId, currentUser.getUsername(), currentUser.getId());
+        
+        if(updateStatus) {
+            return new ApiResponse(true, "문의가 성공적으로 본인으로 지정되었습니다.");
+        } else {
+            return new ApiResponse(false, "업데이트에 실패 했습니다.");
+        }
+        
+    }
 
 }
