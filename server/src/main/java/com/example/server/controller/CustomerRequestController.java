@@ -90,9 +90,10 @@ public class CustomerRequestController {
                                              @RequestParam(value = "requestId") Long requestId) {
         
         Boolean updateStatus = customerRequestService.updateCustomerRequestSelected(requestId, currentUser.getUsername(), currentUser.getId());
+        List<CustomerRequest> allCustomerRequests = customerRequestService.getAllCustomerRequests();
 
         if(updateStatus) {
-            return new ApiResponse(true, "문의가 성공적으로 본인으로 지정되었습니다.");
+            return new ApiResponse(true, "문의가 성공적으로 본인으로 지정되었습니다.", allCustomerRequests);
         } else {
             return new ApiResponse(false, "이미 지정된 문의 입니다.");
         }

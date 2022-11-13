@@ -8,7 +8,9 @@ export type TCustomerRequest = {
   title: string;
   contents: string;
   customerId: string;
-  deleted?: boolean;
-  pending?: boolean;
+  counselorId: string;
+  counselorName: string;
+  deleted: boolean;
+  pending: boolean;
   createdDateTime: string;
 };

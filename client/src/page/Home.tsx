@@ -4,6 +4,7 @@ import style from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { CheckSessionAvailability } from "../utils";
 import { useAppDispatch } from "../store/hooks";
+import { getMyInfoAPI } from "../api";
 
 export default function Home() {
   // STORE STATE
@@ -29,6 +30,16 @@ export default function Home() {
             onClick={() => {
               const loggedIn = CheckSessionAvailability();
               if (loggedIn) {
+                getMyInfoAPI().then(
+                  (res: { id: number; username: string } | null) => {
+                    if (res) {
+                      localStorage.setItem(
+                        "currentCounselorId",
+                        res.id.toString()
+                      );
+                    }
+                  }
+                );
                 navigate("/lookupNewRequests");
               } else {
                 navigate("/login");

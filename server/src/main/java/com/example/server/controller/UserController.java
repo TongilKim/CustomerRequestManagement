@@ -2,6 +2,9 @@ package com.example.server.controller;
 
 import com.example.server.payload.*;
 import com.example.server.repository.UserRepository;
+import com.example.server.security.CurrentUser;
+import com.example.server.security.UserPrincipal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +25,8 @@ public class UserController {
         return new UserIdentityAvailability(isAvailable);
     }
 
-
+    @GetMapping("/user/getMyInfo")
+    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        return new UserSummary(currentUser.getId(), currentUser.getUsername());
+    }
 }

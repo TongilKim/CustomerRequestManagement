@@ -7,7 +7,6 @@ public class CustomerRequestResponse {
     private String createdBy;
     private String createdDateTime;
     private String pending;
-    private String deleted;
 
     
     public Long getId() {
@@ -45,12 +44,6 @@ public class CustomerRequestResponse {
     }
     public void setPending(String pending) {
         this.pending = pending;
-    }
-    public String getDeleted() {
-        return deleted;
-    }
-    public void setDeleted(String deleted) {
-        this.deleted = deleted;
     }
 
     

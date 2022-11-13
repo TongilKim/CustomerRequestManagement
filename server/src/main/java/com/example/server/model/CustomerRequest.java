@@ -31,9 +31,6 @@ public class CustomerRequest {
     private String counselorName;
 
     @Value("false")
-    private Boolean deleted;
-
-    @Value("false")
     private Boolean pending;
 
     @NotNull
@@ -85,14 +82,6 @@ public class CustomerRequest {
 
     public void setCounselorName(String counselorName) {
         this.counselorName = counselorName;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     public Boolean getPending() {

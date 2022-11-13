@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useState } from "react";
 import style from "./CounselorRequest.module.css";
 import AdditionSvg from "../../assets/addition.svg";
+import ActiveAdditionSvg from "../../assets/addition_active.svg";
 import ArrowDownSvg from "../../assets/arrow_down.svg";
 import ArrowUpSvg from "../../assets/arrow_up.svg";
 import WritingModal from "../Modal/WritingModal";
@@ -12,6 +13,7 @@ import {
   setSnackBarMsg,
 } from "../../store/slice/SnackBarSlice";
 import Loader from "../../common/Loader";
+import { setNewCustomerRequestList } from "../../store/slice/CustomerRequestSlice";
 
 type TProps = {
   answered: boolean;
@@ -26,6 +28,9 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
   const [openDetail, setOpenDetail] = useState(false);
   const [openWritingModal, setOpenWritingModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const myAssignedRequest =
+    data.pending &&
+    localStorage.getItem("currentCounselorId") === data.counselorId.toString();
 
   const closeModal = useCallback(() => {
     setOpenWritingModal(false);
@@ -44,6 +49,7 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
         setIsLoading(false);
 
         if (res?.message) {
+          dispatch(setNewCustomerRequestList(res.resultData));
           dispatch(setOpenSnackBar(true));
           dispatch(setSnackBarMsg(res.message));
         } else {
@@ -57,7 +63,12 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
   if (isLoading) return <Loader />;
 
   return (
-    <div className={style.wrapper}>
+    <div
+      className={style.wrapper}
+      style={{
+        borderColor: myAssignedRequest ? "" : "#00ABFF",
+      }}
+    >
       <div className={style.titleSection}>
         <div className={style.titleNum}>{dataIdx}</div>
         <div className={style.title}>{data.title}</div>
@@ -66,18 +77,32 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
             <Fragment>
               <div
                 className={style.addButton}
+                style={{
+                  color: "#00ABFF",
+                }}
                 onClick={() => {
                   setOpenWritingModal(true);
                 }}
               >
-                <img src={AdditionSvg} alt="delete_icon" />
+                <img src={ActiveAdditionSvg} alt="delete_icon" />
                 답변
               </div>
               <div
                 className={style.addButton}
-                onClick={() => onClickAssignRequest(data.id)}
+                style={{
+                  color: myAssignedRequest ? "" : "#00ABFF",
+                  cursor: myAssignedRequest ? "default" : "pointer",
+                }}
+                onClick={() => {
+                  if (!myAssignedRequest) {
+                    onClickAssignRequest(data.id);
+                  }
+                }}
               >
-                <img src={AdditionSvg} alt="delete_icon" />
+                <img
+                  src={myAssignedRequest ? AdditionSvg : ActiveAdditionSvg}
+                  alt="delete_icon"
+                />
                 담당자 본인 지정
               </div>
             </Fragment>

@@ -88,6 +88,25 @@ export const signInAPI = async (signInParam: TSignIn) => {
   return data;
 };
 
+export const getMyInfoAPI = async () => {
+  let data = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(`${API_BASE_URL}/user/getMyInfo`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        data = res;
+      });
+  } catch (e) {
+    data = null;
+  }
+  return data;
+};
+
 export const checkEmailAvailabilityAPI = async (email: string) => {
   let exist = false;
   const headers = getHeaderInfo();

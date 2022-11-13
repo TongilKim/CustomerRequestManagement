@@ -1,10 +1,8 @@
 package com.example.server.service;
 
-import java.time.Duration;
+
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -31,7 +29,6 @@ public class CustomerRequestService {
         customerRequest.setCustomerId(customerRequestRequest.getCustomerId());
         customerRequest.setContents(customerRequestRequest.getContents());
         customerRequest.setTitle(customerRequestRequest.getTitle());
-        customerRequest.setDeleted(false);
         customerRequest.setPending(false);
 
         Instant now = Instant.now();
