@@ -1,18 +1,64 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RequestList from "../component/RequestList/RequestList";
 import CustomerRequest from "../component/RequestItem/CustomerRequest";
 import style from "./CustomerRequestList.module.css";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { getAllSpecificCustomerRequestsAPI } from "../api";
+import { setSpecificCustomerRequestList } from "../store/slice/CustomerRequestSlice";
+import { setOpenSnackBar, setSnackBarMsg } from "../store/slice/SnackBarSlice";
+import { TCustomerRequest } from "../type";
+import Loader from "../common/Loader";
 
 export default function CustomerRequestList() {
   // STORE STATE
+  const dispatch = useAppDispatch();
   const { specificCustomerRequestList } = useAppSelector(
     (state) => state.customerRequest
   );
-  console.log("specificCustomerRequestList: ", specificCustomerRequestList);
+
   // LOCAL STATE
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const customerId = localStorage.getItem("customerId");
+
+      if (customerId) {
+        getAllSpecificCustomerRequestsAPI(customerId).then(
+          (
+            res: {
+              success: boolean;
+              message: string;
+              resultData: TCustomerRequest[];
+            } | null
+          ) => {
+            setIsLoading(false);
+
+            if (res && res.success) {
+              dispatch(setSpecificCustomerRequestList(res.resultData));
+              navigate("/lookupWrittenRequests");
+            } else {
+              if (res?.message) {
+                dispatch(setOpenSnackBar(true));
+                dispatch(setSnackBarMsg(res.message));
+              } else {
+                dispatch(setOpenSnackBar(true));
+                dispatch(
+                  setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다.")
+                );
+              }
+            }
+          }
+        );
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className={style.wrapper}>

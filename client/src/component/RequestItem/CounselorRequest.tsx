@@ -1,16 +1,17 @@
 import React, { Fragment, useCallback, useState } from "react";
 import style from "./CounselorRequest.module.css";
 import AdditionSvg from "../../assets/addition.svg";
-import DeleteSvg from "../../assets/delete.svg";
 import ArrowDownSvg from "../../assets/arrow_down.svg";
 import ArrowUpSvg from "../../assets/arrow_up.svg";
 import WritingModal from "../Modal/WritingModal";
-import { Role } from "../../type";
+import { Role, TCustomerRequest } from "../../type";
 
 type TProps = {
   answered: boolean;
+  dataIdx: number;
+  data: TCustomerRequest;
 };
-export default function CounselorRequest({ answered }: TProps) {
+export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
   const [openDetail, setOpenDetail] = useState(false);
   const [openWritingModal, setOpenWritingModal] = useState(false);
 
@@ -21,8 +22,8 @@ export default function CounselorRequest({ answered }: TProps) {
   return (
     <div className={style.wrapper}>
       <div className={style.titleSection}>
-        <div className={style.titleNum}>1</div>
-        <div className={style.title}>문의요청 타이틀 입니다.</div>
+        <div className={style.titleNum}>{dataIdx}</div>
+        <div className={style.title}>{data.title}</div>
         <div className={style.optionGroup}>
           {!answered && (
             <Fragment>
@@ -45,15 +46,12 @@ export default function CounselorRequest({ answered }: TProps) {
       </div>
       {/* titleSection END */}
       <div className={style.requestDescription}>
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </div>
+        <div>{data.contents}</div>
         <div className={style.writtenDate}>
-          <div>고객 아이디: kkimtt</div>
-          <div>작성날짜: 2022/11/09</div>
+          <div>{`고객 아이디: ${data.customerId}`}</div>
+          <div>{`작성날짜: ${new Date(data.createdDateTime).toLocaleString(
+            "ko-KR"
+          )}`}</div>
         </div>
       </div>
       {answered && (

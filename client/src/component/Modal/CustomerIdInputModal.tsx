@@ -25,10 +25,10 @@ export default function CustomerIdInputModal({
   // LOCAL STATE
   const [customerId, setCustomerId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const getRequests = () => {
-    console.log("hi");
     getAllSpecificCustomerRequestsAPI(customerId).then(
       (
         res: {
@@ -40,8 +40,8 @@ export default function CustomerIdInputModal({
         setIsLoading(false);
         closeModal();
 
-        if (res && res.success) {
-          dispatch(setSpecificCustomerRequestList(res.resultData));
+        if (res?.success) {
+          localStorage.setItem("customerId", customerId);
           navigate("/lookupWrittenRequests");
         } else {
           if (res?.message) {
@@ -55,13 +55,6 @@ export default function CustomerIdInputModal({
       }
     );
   };
-  //   const onSubmit = (
-  //     e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>
-  //   ) => {
-  //     e.preventDefault();
-
-  //     getRequests();
-  //   };
 
   if (isLoading) return <Loader />;
 

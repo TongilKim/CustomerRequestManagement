@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import style from "./CustomerOptions.module.css";
 import { useNavigate } from "react-router-dom";
 import WritingModal from "../component/Modal/WritingModal";
@@ -16,6 +16,9 @@ export default function CustomerOptions() {
     setOpenCustomerIdInput(false);
   }, []);
 
+  useEffect(() => {
+    localStorage.removeItem("customerId");
+  }, []);
   return (
     <Fragment>
       <div className={style.container}>
