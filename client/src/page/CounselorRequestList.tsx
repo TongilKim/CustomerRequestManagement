@@ -71,8 +71,9 @@ export default function CounselorRequestList() {
   }, []);
 
   useEffect(() => {
-    fetchAllCompletedRequests();
-    fetchAllAvailableRequests();
+    fetchAllAvailableRequests().then(() => {
+      fetchAllCompletedRequests();
+    });
   }, []);
 
   useInterval(() => {

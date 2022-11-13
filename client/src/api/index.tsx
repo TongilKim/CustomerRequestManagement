@@ -122,7 +122,6 @@ export const checkEmailAvailabilityAPI = async (email: string) => {
     })
       .then((response) => response.json())
       .then((res: { available: boolean }) => {
-        console.log("res: ", res);
         exist = res.available;
       });
   } catch (e) {
@@ -170,7 +169,6 @@ export const getAllAvailableCustomerRequestsAPI = async () => {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         data = res;
       });
   } catch (error) {
@@ -234,7 +232,6 @@ export const assignCustomerRequestAPI = async (param: {
     )
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         data = res;
       });
   } catch (error) {
@@ -258,7 +255,6 @@ export const createCompletedCustomerRequestAPI = async (
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         data = res;
       });
   } catch (error) {
@@ -283,7 +279,6 @@ export const getAllCompletedRequestByCounselor = async (
     )
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         data = res;
       });
   } catch (error) {
@@ -306,7 +301,6 @@ export const getAllCompletedRequestByCustomer = async (customerId: string) => {
     )
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         data = res;
       });
   } catch (error) {

@@ -40,7 +40,7 @@ export default function Login() {
   const validateEmailDuplicate = useCallback(async () => {
     if (emailErrorMsg.length === 0 && userEmail.length > 0) {
       const emailExist = await checkEmailAvailabilityAPI(userEmail);
-      console.log("emailExist: ");
+
       if (!emailExist) {
         setEmailErrorMsg("이미 존재하는 이메일 입니다!");
       }
