@@ -43,7 +43,6 @@ public class CustomerRequestService {
     public List<CustomerRequest> getAllCustomerRequests() {
 
         return customerRequestRepository.findAll().stream()
-                                        .filter(request -> !request.getDeleted() && !request.getPending())
                                         .collect(Collectors.toList());
     }
 
@@ -66,14 +65,17 @@ public class CustomerRequestService {
         try {
             CustomerRequest customerRequestToUpdate = customerRequestRepository.findById(requestId).orElse(null);;
             
-            if(customerRequestToUpdate != null) {
+            if(customerRequestToUpdate != null && !customerRequestToUpdate.getPending()) {
                 customerRequestToUpdate.setPending(true);
                 customerRequestToUpdate.setCounselorId(currentUserId);
                 customerRequestToUpdate.setCounselorName(currentUserName);
                 
                 customerRequestRepository.save(customerRequestToUpdate);
+                return true;
+            } else {
+                return false;
             }
-            return true;
+            
         }catch(EmptyResultDataAccessException error) {
             logger.info("업데이트 하려는 데이터가 존재하지 않습니다. REQUEST ID = {}", requestId);
             return false;

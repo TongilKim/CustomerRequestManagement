@@ -11,10 +11,14 @@ import com.example.server.payload.SignUpRequest;
 import com.example.server.repository.RoleRepository;
 import com.example.server.repository.UserRepository;
 import com.example.server.security.JwtTokenProvider;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,20 +53,27 @@ public class AuthController {
     @Autowired
     JwtTokenProvider tokenProvider;
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerRequestController.class);
+    
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
-                        loginRequest.getPassword()
-                )
-        );
+        Authentication authentication = null;
+        try {
+                 authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginRequest.getUsernameOrEmail(),
+                                loginRequest.getPassword()
+                        )
+                );
+        } catch(BadCredentialsException error) {
+                logger.error("옳지 않은 입력정보 입니다.", error);
+        }
+       
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-
+       
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 

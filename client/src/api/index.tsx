@@ -212,8 +212,11 @@ export const assignCustomerRequestAPI = async (param: {
       .then((response) => response.json())
       .then((res) => {
         console.log("res: ", res);
+        data = res;
       });
   } catch (error) {
     data = null;
   }
+
+  return data;
 };

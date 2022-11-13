@@ -6,6 +6,12 @@ import ArrowUpSvg from "../../assets/arrow_up.svg";
 import WritingModal from "../Modal/WritingModal";
 import { Role, TCustomerRequest } from "../../type";
 import { assignCustomerRequestAPI } from "../../api";
+import { useAppDispatch } from "../../store/hooks";
+import {
+  setOpenSnackBar,
+  setSnackBarMsg,
+} from "../../store/slice/SnackBarSlice";
+import Loader from "../../common/Loader";
 
 type TProps = {
   answered: boolean;
@@ -13,16 +19,42 @@ type TProps = {
   data: TCustomerRequest;
 };
 export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
+  // STORE STATE
+  const dispatch = useAppDispatch();
+
+  // LOCAL STATE
   const [openDetail, setOpenDetail] = useState(false);
   const [openWritingModal, setOpenWritingModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const closeModal = useCallback(() => {
     setOpenWritingModal(false);
   }, [openWritingModal]);
 
   const onClickAssignRequest = (id: number) => {
-    assignCustomerRequestAPI({ requestId: id });
+    setIsLoading(true);
+    assignCustomerRequestAPI({ requestId: id }).then(
+      (
+        res: {
+          success: boolean;
+          message: string;
+          resultData: TCustomerRequest[];
+        } | null
+      ) => {
+        setIsLoading(false);
+
+        if (res?.message) {
+          dispatch(setOpenSnackBar(true));
+          dispatch(setSnackBarMsg(res.message));
+        } else {
+          dispatch(setOpenSnackBar(true));
+          dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
+        }
+      }
+    );
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className={style.wrapper}>

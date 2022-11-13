@@ -37,7 +37,7 @@ export default function CustomerRequestList() {
           ) => {
             setIsLoading(false);
 
-            if (res && res.success) {
+            if (res?.success) {
               dispatch(setSpecificCustomerRequestList(res.resultData));
               navigate("/lookupWrittenRequests");
             } else {

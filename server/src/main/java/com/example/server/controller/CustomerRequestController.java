@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,11 +90,11 @@ public class CustomerRequestController {
                                              @RequestParam(value = "requestId") Long requestId) {
         
         Boolean updateStatus = customerRequestService.updateCustomerRequestSelected(requestId, currentUser.getUsername(), currentUser.getId());
-        
+
         if(updateStatus) {
             return new ApiResponse(true, "문의가 성공적으로 본인으로 지정되었습니다.");
         } else {
-            return new ApiResponse(false, "업데이트에 실패 했습니다.");
+            return new ApiResponse(false, "이미 지정된 문의 입니다.");
         }
         
     }
