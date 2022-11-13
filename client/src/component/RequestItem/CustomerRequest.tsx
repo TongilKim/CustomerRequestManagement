@@ -4,18 +4,21 @@ import AdditionSvg from "../../assets/addition.svg";
 import DeleteSvg from "../../assets/delete.svg";
 import ArrowDownSvg from "../../assets/arrow_down.svg";
 import ArrowUpSvg from "../../assets/arrow_up.svg";
+import { TCustomerRequest } from "../../type";
 
 type TProps = {
   answered: boolean;
+  dataIdx: number;
+  data: TCustomerRequest;
 };
-export default function CustomerRequest({ answered }: TProps) {
+export default function CustomerRequest({ answered, data, dataIdx }: TProps) {
   const [openDetail, setOpenDetail] = useState(false);
 
   return (
     <div className={style.wrapper}>
       <div className={style.titleSection}>
-        <div className={style.titleNum}>1</div>
-        <div className={style.title}>문의요청 타이틀 입니다.</div>
+        <div className={style.titleNum}>{dataIdx}</div>
+        <div className={style.title}>{data.title}</div>
         <div className={style.optionGroup}>
           {!answered && (
             <div className={style.addButton} onClick={() => {}}>
@@ -27,13 +30,12 @@ export default function CustomerRequest({ answered }: TProps) {
       </div>
       {/* titleSection END */}
       <div className={style.requestDescription}>
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+        <div>{data.contents}</div>
+        <div className={style.writtenDate}>
+          {`작성날짜: ${new Date(data.createdDateTime).toLocaleString(
+            "ko-KR"
+          )}`}
         </div>
-        <div className={style.writtenDate}>작성날짜: 2022/11/09</div>
       </div>
       {answered && (
         <div

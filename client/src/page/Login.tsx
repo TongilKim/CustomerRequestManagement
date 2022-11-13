@@ -56,7 +56,6 @@ export default function Login() {
         email: userEmail,
         password: userPassword,
       }).then((res: { success: boolean; message: string } | null) => {
-        console.log("res: ", res);
         if (res) {
           if (res.success) {
             navigate("/");

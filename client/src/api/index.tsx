@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../constants";
+import { TCustomerRequest } from "../type";
 import { CheckSessionAvailability } from "../utils";
 
 const getHeaderInfo = () => {
@@ -10,15 +11,14 @@ const getHeaderInfo = () => {
   return header;
 };
 
-type SignUp = {
+type TSignUp = {
   username: string;
   email: string;
   password: string;
 };
-export const signUpAPI = async (signUpParam: SignUp) => {
-  let data = null;
+export const signUpAPI = async (signUpParam: TSignUp) => {
+  let data: { success: boolean; message: string } | null = null;
   let headers = getHeaderInfo();
-  console.log("headers: ", headers);
 
   try {
     await fetch(`${API_BASE_URL}/auth/signup`, {
@@ -45,13 +45,14 @@ export const signUpAPI = async (signUpParam: SignUp) => {
   return data;
 };
 
-type SignIn = {
+type TSignIn = {
   usernameOrEmail: string;
   password: string;
 };
 
-export const signInAPI = async (signInParam: SignIn) => {
-  let data = null;
+export const signInAPI = async (signInParam: TSignIn) => {
+  let data: { success: boolean; message: string; accessToken?: string } | null =
+    null;
   let headers = getHeaderInfo();
 
   try {
@@ -62,7 +63,6 @@ export const signInAPI = async (signInParam: SignIn) => {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res: ", res);
         if (res.error) {
           if (res.status === 500) {
             data = {
@@ -105,10 +105,53 @@ export const checkEmailAvailabilityAPI = async (email: string) => {
   } catch (e) {
     exist = false;
   }
-  console.log("exist: ", exist);
+
   return exist;
-  // return request({
-  //   url: API_BASE_URL + "/user/checkEmailAvailability?email=" + email,
-  //   method: "GET",
-  // });
+};
+
+type TNewCustomerRequest = {
+  title: string;
+  customerId: string;
+  contents: string;
+};
+export const createNewCustomerRequestAPI = async (
+  newCustomerRequest: TNewCustomerRequest
+) => {
+  let data: { success: boolean; message: string } | null = null;
+  let headers = getHeaderInfo();
+
+  try {
+    await fetch(`${API_BASE_URL}/customerRequests`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(newCustomerRequest),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
+  return data;
+};
+
+export const getAllSpecificCustomerRequestsAPI = async (customerId: string) => {
+  let data: TCustomerRequest[] | null = null;
+  let headers = getHeaderInfo();
+
+  try {
+    await fetch(`${API_BASE_URL}/customerRequests?customerId=${customerId}`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res: ", res);
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
+  return data;
 };

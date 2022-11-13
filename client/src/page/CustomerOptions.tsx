@@ -3,13 +3,17 @@ import style from "./CustomerOptions.module.css";
 import { useNavigate } from "react-router-dom";
 import WritingModal from "../component/Modal/WritingModal";
 import { Role } from "../type";
+import CustomerIdInputModal from "../component/Modal/CustomerIdInputModal";
 
 export default function CustomerOptions() {
+  // LOCAL STATE
   const navigate = useNavigate();
   const [openNewRequest, setOpenNewRequest] = useState(false);
+  const [openCustomerIdInput, setOpenCustomerIdInput] = useState(false);
 
   const closeModal = useCallback(() => {
     setOpenNewRequest(false);
+    setOpenCustomerIdInput(false);
   }, []);
 
   return (
@@ -26,16 +30,14 @@ export default function CustomerOptions() {
         <div className={style.title}>고객 문의</div>
         <div>
           <button
-            type="submit"
             onClick={() => {
-              navigate("/lookupWrittenRequests");
+              setOpenCustomerIdInput(true);
             }}
             className={style.submitButton}
           >
             문의 목록 조회
           </button>
           <button
-            type="submit"
             onClick={() => {
               setOpenNewRequest(true);
             }}
@@ -46,6 +48,12 @@ export default function CustomerOptions() {
         </div>
       </div>
 
+      {openCustomerIdInput && (
+        <CustomerIdInputModal
+          closeModal={closeModal}
+          closeModalByOutside={false}
+        />
+      )}
       {openNewRequest && (
         <WritingModal
           role={Role.CustomerRole}

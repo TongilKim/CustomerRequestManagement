@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import com.example.server.security.CustomUserDetailsService;
+import com.example.server.service.CustomUserDetailsService;
 import com.example.server.security.JwtAuthenticationEntryPoint;
 import com.example.server.security.JwtAuthenticationFilter;
 
@@ -85,6 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .antMatchers("/h2-console/**")
                         .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
+                        .permitAll()
+                    .antMatchers( "/api/customerRequests/**")
                         .permitAll()
                     .antMatchers(HttpMethod.GET,  "/api/users/**")
                         .permitAll()
