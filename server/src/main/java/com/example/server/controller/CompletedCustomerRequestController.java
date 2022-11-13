@@ -20,6 +20,7 @@ import com.example.server.payload.ApiResponse;
 import com.example.server.payload.CompletedCustomerRequestRequest;
 import com.example.server.repository.CompletedCustomerRequestRepository;
 import com.example.server.service.CompletedCustomerRequestService;
+import com.example.server.service.CustomerRequestService;
 
 @RestController
 @RequestMapping("/api/completedCustomerRequests")
@@ -31,10 +32,15 @@ public class CompletedCustomerRequestController {
     @Autowired
     private CompletedCustomerRequestService completedCustomerRequestService;
 
+    @Autowired
+    private CustomerRequestService customerRequestService;
+    
     @PostMapping
     public ResponseEntity<?> createCompletedCustomerRequest(@Valid @RequestBody CompletedCustomerRequestRequest completedCustomerRequestRequest) {
         CompletedCustomerRequest completedCustomerRequest = completedCustomerRequestService.createCompletedCustomerRequest(completedCustomerRequestRequest);
         
+        customerRequestService.updateCustomerRequestAnsweredProperty(completedCustomerRequest.getId());
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{counselorId}")
                 .buildAndExpand(completedCustomerRequest.getCounselorId()).toUri();

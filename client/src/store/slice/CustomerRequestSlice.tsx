@@ -16,7 +16,7 @@ const initialState: TinitialState = {
   newCustomerRequestList: [],
 };
 
-const snackbarSlice = createSlice({
+const requestSlice = createSlice({
   name: "customerRequest",
   initialState,
   reducers: {
@@ -36,5 +36,5 @@ const snackbarSlice = createSlice({
 });
 
 export const { setSpecificCustomerRequestList, setNewCustomerRequestList } =
-  snackbarSlice.actions;
-export default snackbarSlice.reducer;
+  requestSlice.actions;
+export default requestSlice.reducer;

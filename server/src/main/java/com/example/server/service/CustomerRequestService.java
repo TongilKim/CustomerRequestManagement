@@ -30,7 +30,8 @@ public class CustomerRequestService {
         customerRequest.setContents(customerRequestRequest.getContents());
         customerRequest.setTitle(customerRequestRequest.getTitle());
         customerRequest.setPending(false);
-
+        customerRequest.setAnswered(false);
+        
         Instant now = Instant.now();
         customerRequest.setCreatedDateTime(now);
 
@@ -57,9 +58,23 @@ public class CustomerRequestService {
         }
     }
 
+    public void updateCustomerRequestAnsweredProperty(Long requestId) {
+        try {
+            CustomerRequest customerRequestToUpdate = customerRequestRepository.findById(requestId).orElse(null);
+
+            if(customerRequestToUpdate != null && !customerRequestToUpdate.getPending()) {
+                customerRequestToUpdate.setAnswered(true);
+                
+                customerRequestRepository.save(customerRequestToUpdate);
+            } 
+            
+        } catch(EmptyResultDataAccessException error) {
+            logger.info("업데이트 하려는 데이터가 존재하지 않습니다. REQUEST ID = {}", requestId);
+        }
+    }
     public Boolean updateCustomerRequestSelected(Long requestId, String currentUserName, Long currentUserId) {
         try {
-            CustomerRequest customerRequestToUpdate = customerRequestRepository.findById(requestId).orElse(null);;
+            CustomerRequest customerRequestToUpdate = customerRequestRepository.findById(requestId).orElse(null);
             
             if(customerRequestToUpdate != null && !customerRequestToUpdate.getPending()) {
                 customerRequestToUpdate.setPending(true);

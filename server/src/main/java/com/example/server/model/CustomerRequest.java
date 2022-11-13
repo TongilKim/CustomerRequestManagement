@@ -33,6 +33,9 @@ public class CustomerRequest {
     @Value("false")
     private Boolean pending;
 
+    @Value("false")
+    private Boolean answered;
+
     @NotNull
     private Instant createdDateTime;
 
@@ -92,6 +95,14 @@ public class CustomerRequest {
         this.pending = pending;
     }
 
+    public Boolean getAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(Boolean answered) {
+        this.answered = answered;
+    }
+
     public Instant getCreatedDateTime() {
         return createdDateTime;
     }
@@ -99,6 +110,5 @@ public class CustomerRequest {
     public void setCreatedDateTime(Instant createdDateTime) {
         this.createdDateTime = createdDateTime;
     }
-
 
 }

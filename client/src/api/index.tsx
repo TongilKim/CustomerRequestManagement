@@ -1,5 +1,9 @@
 import { API_BASE_URL } from "../constants";
-import { TCompletedCustomerRequest, TCustomerRequest } from "../type";
+import {
+  TCompletedCustomerRequest,
+  TCustomerRequest,
+  TRequestResponse,
+} from "../type";
 import { CheckSessionAvailability } from "../utils";
 
 const getHeaderInfo = () => {
@@ -17,7 +21,7 @@ type TSignUp = {
   password: string;
 };
 export const signUpAPI = async (signUpParam: TSignUp) => {
-  let data: { success: boolean; message: string } | null = null;
+  let data: TRequestResponse | null = null;
   const headers = getHeaderInfo();
 
   try {
@@ -136,7 +140,7 @@ type TNewCustomerRequest = {
 export const createNewCustomerRequestAPI = async (
   newCustomerRequest: TNewCustomerRequest
 ) => {
-  let data: { success: boolean; message: string } | null = null;
+  let data: TRequestResponse | null = null;
   const headers = getHeaderInfo();
 
   try {
@@ -243,7 +247,7 @@ export const assignCustomerRequestAPI = async (param: {
 export const createCompletedCustomerRequestAPI = async (
   param: TCompletedCustomerRequest
 ) => {
-  let data: { success: boolean; message: string } | null = null;
+  let data: TRequestResponse | null = null;
   const headers = getHeaderInfo();
 
   try {
@@ -252,6 +256,31 @@ export const createCompletedCustomerRequestAPI = async (
       headers: headers,
       body: JSON.stringify(param),
     })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res: ", res);
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
+  return data;
+};
+
+export const getAllCompletedRequestByCounselor = async (
+  counselorId: number
+) => {
+  let data: TRequestResponse | null = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(
+      `${API_BASE_URL}/completedCustomerRequests/byCounselor?counselorId=${counselorId}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    )
       .then((response) => response.json())
       .then((res) => {
         console.log("res: ", res);

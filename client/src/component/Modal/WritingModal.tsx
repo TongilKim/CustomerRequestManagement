@@ -2,16 +2,25 @@ import React, { Fragment, useState } from "react";
 import ReactDom from "react-dom";
 import style from "./WritingModal.module.css";
 import Loader from "../../common/Loader";
-import { Role, TCustomerRequest } from "../../type";
+import {
+  Role,
+  TCompletedCustomerRequest,
+  TCustomerRequest,
+  TRequestResponse,
+} from "../../type";
 import {
   createCompletedCustomerRequestAPI,
   createNewCustomerRequestAPI,
+  deleteCustomerRequestAPI,
+  getAllCompletedRequestByCounselor,
 } from "../../api";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   setOpenSnackBar,
   setSnackBarMsg,
 } from "../../store/slice/SnackBarSlice";
+import { setCompletedRequestListForCounselor } from "../../store/slice/CompletedCustomerRequestSlice";
+import { setNewCustomerRequestList } from "../../store/slice/CustomerRequestSlice";
 
 type TProps = {
   closeModal: () => void;
@@ -28,6 +37,10 @@ export default function WritingModal({
 }: TProps) {
   // STORE STATE
   const dispatch = useAppDispatch();
+  const { newCustomerRequestList } = useAppSelector(
+    (state) => state.customerRequest
+  );
+
   // LOCAL STATE
   const [isLoading, setIsLoading] = useState(false);
   const [customerId, setCustomerId] = useState("");
@@ -44,7 +57,7 @@ export default function WritingModal({
         title: requestTitle,
         customerId: customerId,
         contents: requestContents,
-      }).then((res: { success: boolean; message: string } | null) => {
+      }).then((res: TRequestResponse | null) => {
         if (res?.success) {
           dispatch(setOpenSnackBar(true));
           dispatch(setSnackBarMsg(res.message));
@@ -58,6 +71,7 @@ export default function WritingModal({
       });
     } else {
       if (selectedRequestInfo) {
+        // 신규 답변된 문의 생성
         createCompletedCustomerRequestAPI({
           title: selectedRequestInfo.title,
           contents: selectedRequestInfo.contents,
@@ -66,11 +80,54 @@ export default function WritingModal({
           answeredContents: requestContents,
           counselorName: selectedRequestInfo.counselorName,
           counselorId: selectedRequestInfo.counselorId,
-        });
-      }
+        }).then((res: TRequestResponse | null) => {
+          if (res?.success) {
+            // delete 답변한 문의
+            deleteCustomerRequestAPI({
+              customerId: selectedRequestInfo.customerId,
+              requestId: selectedRequestInfo.id,
+            }).then(
+              (
+                res: {
+                  success: boolean;
+                  message: string;
+                  resultData: TCustomerRequest[];
+                } | null
+              ) => {
+                if (res?.success) {
+                  const newRequestsAfterDelete = newCustomerRequestList.filter(
+                    (request) => {
+                      return request.id !== selectedRequestInfo.id;
+                    }
+                  );
 
-      setIsLoading(false);
-      closeModal();
+                  dispatch(setNewCustomerRequestList(newRequestsAfterDelete));
+
+                  //fetch 답변한 문의 리스트
+                  getAllCompletedRequestByCounselor(
+                    Number(localStorage.getItem("currentCounselorId"))
+                  ).then((res: TRequestResponse | null) => {
+                    if (res?.success) {
+                      dispatch(
+                        setCompletedRequestListForCounselor(
+                          res.resultData as TCompletedCustomerRequest[]
+                        )
+                      );
+                    }
+                  });
+                }
+              }
+            );
+            dispatch(setOpenSnackBar(true));
+            dispatch(setSnackBarMsg(res.message));
+          } else {
+            dispatch(setOpenSnackBar(true));
+            dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
+          }
+        });
+        setIsLoading(false);
+        closeModal();
+      }
     }
   };
 

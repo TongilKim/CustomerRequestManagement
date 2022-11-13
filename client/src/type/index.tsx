@@ -20,7 +20,14 @@ export type TCompletedCustomerRequest = {
   contents: string;
   customerId: string;
   requestOriginDatetime: string;
+  createdDateTime?: string;
   answeredContents: string;
   counselorName: string;
   counselorId: string;
+};
+
+export type TRequestResponse = {
+  success: boolean;
+  message: string;
+  resultData?: any[];
 };

@@ -6,6 +6,7 @@ import { ACCESS_TOKEN } from "../constants";
 import { useAppDispatch } from "../store/hooks";
 import { setOpenSnackBar, setSnackBarMsg } from "../store/slice/SnackBarSlice";
 import ValidateEmail from "../utils/ValidateEmail";
+import { TRequestResponse } from "../type";
 
 export default function Login() {
   // STORE STATE
@@ -55,7 +56,7 @@ export default function Login() {
         username: userName,
         email: userEmail,
         password: userPassword,
-      }).then((res: { success: boolean; message: string } | null) => {
+      }).then((res: TRequestResponse | null) => {
         if (res) {
           if (res.success) {
             navigate("/");

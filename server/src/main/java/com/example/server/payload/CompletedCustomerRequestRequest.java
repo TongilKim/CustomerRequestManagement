@@ -84,6 +84,6 @@ public class CompletedCustomerRequestRequest {
 
     public void setCounselorId(Long counselorId) {
         this.counselorId = counselorId;
-    }    
+    }
 
 }

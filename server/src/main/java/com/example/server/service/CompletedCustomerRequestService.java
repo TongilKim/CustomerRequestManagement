@@ -2,7 +2,6 @@ package com.example.server.service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class CompletedCustomerRequestService {
     
     @Autowired
     private CompletedCustomerRequestRepository completedCustomerRequestRepository;
-
+    
     public CompletedCustomerRequest createCompletedCustomerRequest(CompletedCustomerRequestRequest completedCustomerRequestRequest) {
         CompletedCustomerRequest completedCustomerRequest = new CompletedCustomerRequest();
 

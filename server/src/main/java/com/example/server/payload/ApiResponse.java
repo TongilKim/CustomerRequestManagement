@@ -2,9 +2,6 @@ package com.example.server.payload;
 
 import java.util.List;
 
-import com.example.server.model.CompletedCustomerRequest;
-import com.example.server.model.CustomerRequest;
-
 public class ApiResponse {
     private Boolean success;
     private String message;

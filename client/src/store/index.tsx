@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import snackBarReducer from "./slice/SnackBarSlice";
 import customerRequestReducer from "./slice/CustomerRequestSlice";
+import completedRequestReducer from "./slice/CompletedCustomerRequestSlice";
 
 export const store = configureStore({
   reducer: {
     snackBar: snackBarReducer,
     customerRequest: customerRequestReducer,
+    completedCustomerRequest: completedRequestReducer,
   },
 });
 
