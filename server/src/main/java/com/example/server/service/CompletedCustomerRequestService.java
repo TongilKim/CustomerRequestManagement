@@ -1,6 +1,9 @@
 package com.example.server.service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +26,20 @@ public class CompletedCustomerRequestService {
         completedCustomerRequest.setTitle(completedCustomerRequestRequest.getTitle());
         completedCustomerRequest.setRequestOriginDatetime(completedCustomerRequestRequest.getRequestOriginDatetime());
         completedCustomerRequest.setAnsweredContents(completedCustomerRequestRequest.getAnsweredContents());
-        completedCustomerRequest.setCounselorId(completedCustomerRequest.getCounselorId());
-        completedCustomerRequest.setCounselorName(completedCustomerRequest.getCounselorName());
+        completedCustomerRequest.setCounselorId(completedCustomerRequestRequest.getCounselorId());
+        completedCustomerRequest.setCounselorName(completedCustomerRequestRequest.getCounselorName());
         
         Instant now = Instant.now();
         completedCustomerRequest.setCreatedDateTime(now);
         
         return completedCustomerRequestRepository.save(completedCustomerRequest);
+    }
+
+    public List<CompletedCustomerRequest> getAllRequestsByCounselorId(Long counselorId) {
+
+        return completedCustomerRequestRepository.findAll()
+                                                 .stream()
+                                                 .filter((completedReq) -> completedReq.getCounselorId().equals(counselorId))
+                                                 .collect(Collectors.toList());
     }
 }

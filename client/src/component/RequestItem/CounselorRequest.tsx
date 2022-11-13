@@ -28,9 +28,10 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
   const [openDetail, setOpenDetail] = useState(false);
   const [openWritingModal, setOpenWritingModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const myAssignedRequest =
+  const isAssignedRequest =
     data.pending &&
     localStorage.getItem("currentCounselorId") === data.counselorId.toString();
+  const answerButtonAvailable = isAssignedRequest && data.pending;
 
   const closeModal = useCallback(() => {
     setOpenWritingModal(false);
@@ -66,7 +67,7 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
     <div
       className={style.wrapper}
       style={{
-        borderColor: myAssignedRequest ? "" : "#00ABFF",
+        borderColor: isAssignedRequest ? "" : "#00ABFF",
       }}
     >
       <div className={style.titleSection}>
@@ -78,30 +79,42 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
               <div
                 className={style.addButton}
                 style={{
-                  color: "#00ABFF",
+                  color: answerButtonAvailable ? "#00ABFF" : "",
+                  cursor:
+                    answerButtonAvailable && data.pending
+                      ? "pointer"
+                      : "default",
                 }}
                 onClick={() => {
-                  setOpenWritingModal(true);
+                  if (isAssignedRequest && data.pending)
+                    setOpenWritingModal(true);
                 }}
               >
-                <img src={ActiveAdditionSvg} alt="delete_icon" />
+                <img
+                  src={
+                    isAssignedRequest && data.pending
+                      ? ActiveAdditionSvg
+                      : AdditionSvg
+                  }
+                  alt="adding_icon"
+                />
                 답변
               </div>
               <div
                 className={style.addButton}
                 style={{
-                  color: myAssignedRequest ? "" : "#00ABFF",
-                  cursor: myAssignedRequest ? "default" : "pointer",
+                  color: isAssignedRequest ? "" : "#00ABFF",
+                  cursor: isAssignedRequest ? "default" : "pointer",
                 }}
                 onClick={() => {
-                  if (!myAssignedRequest) {
+                  if (!isAssignedRequest) {
                     onClickAssignRequest(data.id);
                   }
                 }}
               >
                 <img
-                  src={myAssignedRequest ? AdditionSvg : ActiveAdditionSvg}
-                  alt="delete_icon"
+                  src={isAssignedRequest ? AdditionSvg : ActiveAdditionSvg}
+                  alt="adding_icon"
                 />
                 담당자 본인 지정
               </div>
@@ -144,7 +157,11 @@ export default function CounselorRequest({ answered, data, dataIdx }: TProps) {
         </div>
       )}
       {openWritingModal && (
-        <WritingModal role={Role.CounselorRole} closeModal={closeModal} />
+        <WritingModal
+          role={Role.CounselorRole}
+          closeModal={closeModal}
+          selectedRequestInfo={data}
+        />
       )}
     </div>
   );

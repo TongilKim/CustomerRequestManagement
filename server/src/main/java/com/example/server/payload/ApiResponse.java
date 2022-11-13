@@ -2,19 +2,20 @@ package com.example.server.payload;
 
 import java.util.List;
 
+import com.example.server.model.CompletedCustomerRequest;
 import com.example.server.model.CustomerRequest;
 
 public class ApiResponse {
     private Boolean success;
     private String message;
-    private List<CustomerRequest> resultData;
+    private List<?> resultData;
     
     public ApiResponse(Boolean success, String message) {
         this.success = success;
         this.message = message;
     }
     
-    public ApiResponse(Boolean success, String message, List<CustomerRequest> resultData) {
+    public ApiResponse(Boolean success, String message, List<?> resultData) {
         this.success = success;
         this.message = message;
         this.resultData = resultData;
@@ -35,11 +36,11 @@ public class ApiResponse {
         this.message = message;
     }
 
-    public List<CustomerRequest> getResultData() {
+    public List<?> getResultData() {
         return resultData;
     }
 
-    public void setResultData(List<CustomerRequest> resultData) {
+    public void setResultData(List<?> resultData) {
         this.resultData = resultData;
     }
 

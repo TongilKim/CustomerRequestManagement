@@ -29,8 +29,6 @@ public class CompletedCustomerRequestRequest {
     @NotNull
     private Long counselorId;
 
-    @NotNull
-    private Instant createdDateTime;
 
     public String getTitle() {
         return title;
@@ -86,16 +84,6 @@ public class CompletedCustomerRequestRequest {
 
     public void setCounselorId(Long counselorId) {
         this.counselorId = counselorId;
-    }
-
-    public Instant getCreatedDateTime() {
-        return createdDateTime;
-    }
-
-    public void setCreatedDateTime(Instant createdDateTime) {
-        this.createdDateTime = createdDateTime;
-    }
-
-    
+    }    
 
 }

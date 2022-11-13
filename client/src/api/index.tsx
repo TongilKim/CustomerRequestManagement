@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../constants";
-import { TCustomerRequest } from "../type";
+import { TCompletedCustomerRequest, TCustomerRequest } from "../type";
 import { CheckSessionAvailability } from "../utils";
 
 const getHeaderInfo = () => {
@@ -32,7 +32,7 @@ export const signUpAPI = async (signUpParam: TSignUp) => {
           if (res.status === 400) {
             data = {
               success: false,
-              message: "패스워드 길이가 적절치 않습니다.",
+              message: "입력 하신 이름/패스워드가 너무 길거나 짧습니다.",
             };
           }
         } else {
@@ -237,5 +237,28 @@ export const assignCustomerRequestAPI = async (param: {
     data = null;
   }
 
+  return data;
+};
+
+export const createCompletedCustomerRequestAPI = async (
+  param: TCompletedCustomerRequest
+) => {
+  let data: { success: boolean; message: string } | null = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(`${API_BASE_URL}/completedCustomerRequests`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(param),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res: ", res);
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
   return data;
 };

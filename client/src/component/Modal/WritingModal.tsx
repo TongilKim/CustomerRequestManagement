@@ -2,8 +2,11 @@ import React, { Fragment, useState } from "react";
 import ReactDom from "react-dom";
 import style from "./WritingModal.module.css";
 import Loader from "../../common/Loader";
-import { Role } from "../../type";
-import { createNewCustomerRequestAPI } from "../../api";
+import { Role, TCustomerRequest } from "../../type";
+import {
+  createCompletedCustomerRequestAPI,
+  createNewCustomerRequestAPI,
+} from "../../api";
 import { useAppDispatch } from "../../store/hooks";
 import {
   setOpenSnackBar,
@@ -14,12 +17,14 @@ type TProps = {
   closeModal: () => void;
   closeModalByOutside?: boolean;
   role: Role;
+  selectedRequestInfo?: TCustomerRequest;
 };
 
 export default function WritingModal({
   closeModal,
   closeModalByOutside,
   role,
+  selectedRequestInfo,
 }: TProps) {
   // STORE STATE
   const dispatch = useAppDispatch();
@@ -34,22 +39,39 @@ export default function WritingModal({
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    createNewCustomerRequestAPI({
-      title: requestTitle,
-      customerId: customerId,
-      contents: requestContents,
-    }).then((res: { success: boolean; message: string } | null) => {
-      if (res?.success) {
-        dispatch(setOpenSnackBar(true));
-        dispatch(setSnackBarMsg(res.message));
-      } else {
-        dispatch(setOpenSnackBar(true));
-        dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
+    if (customerRole) {
+      createNewCustomerRequestAPI({
+        title: requestTitle,
+        customerId: customerId,
+        contents: requestContents,
+      }).then((res: { success: boolean; message: string } | null) => {
+        if (res?.success) {
+          dispatch(setOpenSnackBar(true));
+          dispatch(setSnackBarMsg(res.message));
+        } else {
+          dispatch(setOpenSnackBar(true));
+          dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
+        }
+
+        setIsLoading(false);
+        closeModal();
+      });
+    } else {
+      if (selectedRequestInfo) {
+        createCompletedCustomerRequestAPI({
+          title: selectedRequestInfo.title,
+          contents: selectedRequestInfo.contents,
+          customerId: selectedRequestInfo.customerId,
+          requestOriginDatetime: selectedRequestInfo.createdDateTime,
+          answeredContents: requestContents,
+          counselorName: selectedRequestInfo.counselorName,
+          counselorId: selectedRequestInfo.counselorId,
+        });
       }
 
       setIsLoading(false);
       closeModal();
-    });
+    }
   };
 
   if (isLoading) return <Loader />;
@@ -78,8 +100,8 @@ export default function WritingModal({
               <h2>{customerRole ? "신규 문의 접수" : "문의 답변"}</h2>
               {!customerRole && (
                 <div>
-                  <div>상담사: Tongil</div>
-                  <div>작성 날짜: 2022/11/09</div>
+                  <div>{`상담사: ${selectedRequestInfo?.counselorName}`}</div>
+                  <div>{`작성 날짜: ${new Date().toLocaleString()}`}</div>
                 </div>
               )}
             </div>
@@ -92,7 +114,9 @@ export default function WritingModal({
                   type="text"
                   id="user-id"
                   disabled={!customerRole}
-                  value={customerRole ? customerId : "kkimtt"}
+                  value={
+                    customerRole ? customerId : selectedRequestInfo?.customerId
+                  }
                   style={
                     !customerRole
                       ? {
@@ -112,9 +136,7 @@ export default function WritingModal({
                   type="text"
                   id="request-title"
                   value={
-                    customerRole
-                      ? requestTitle
-                      : "문의요청 타이틀 입니다. alskdjflasjdflkjasldkfjlasf"
+                    customerRole ? requestTitle : selectedRequestInfo?.title
                   }
                   disabled={!customerRole}
                   style={

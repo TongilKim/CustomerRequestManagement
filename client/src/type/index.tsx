@@ -14,3 +14,13 @@ export type TCustomerRequest = {
   pending: boolean;
   createdDateTime: string;
 };
+
+export type TCompletedCustomerRequest = {
+  title: string;
+  contents: string;
+  customerId: string;
+  requestOriginDatetime: string;
+  answeredContents: string;
+  counselorName: string;
+  counselorId: string;
+};

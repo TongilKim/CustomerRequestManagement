@@ -39,8 +39,7 @@ public class CustomerRequestService {
 
     public List<CustomerRequest> getAllCustomerRequests() {
 
-        return customerRequestRepository.findAll().stream()
-                                        .collect(Collectors.toList());
+        return customerRequestRepository.findAll();
     }
 
     public List<CustomerRequest> getAllSpecificCustomerRequests(String customerId) {
