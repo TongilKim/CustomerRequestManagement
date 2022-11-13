@@ -79,78 +79,78 @@
 
 ## `Server`
 
-📦src
-┣ 📂main
-┃ ┣ 📂java
-┃ ┃ ┣ 📂com
-┃ ┃ ┃ ┣ 📂example
-┃ ┃ ┃ ┃ ┣ 📂server
-┃ ┃ ┃ ┃ ┃ ┣ 📂audit
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜DateAudit.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂config
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuditingConfig.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜WebMvcConfig.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂controller
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthController.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestController.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestController.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂exception
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AppException.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BadRequestException.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ResourceNotFoundException.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂model
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleName.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂payload
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ApiResponse.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestResponse.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestResponse.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationResponse.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignUpRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserIdentityAvailability.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSummary.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂repository
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRepository.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRepository.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleRepository.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂security
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CurrentUser.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationEntryPoint.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationFilter.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtTokenProvider.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserPrincipal.java
-┃ ┃ ┃ ┃ ┃ ┣ 📂service
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestService.java
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetailsService.java
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CustomerRequestService.java
-┃ ┃ ┃ ┃ ┃ ┗ 📜ServerApplication.java
-┃ ┃ ┃ ┃ ┗ 📜.DS_Store
-┃ ┃ ┃ ┗ 📜.DS_Store
-┃ ┃ ┗ 📜.DS_Store
-┃ ┣ 📂resources
-┃ ┃ ┣ 📂static
-┃ ┃ ┣ 📂templates
-┃ ┃ ┣ 📜application.properties
-┃ ┃ ┣ 📜data.sql
-┃ ┃ ┗ 📜schema.sql
-┃ ┗ 📜.DS_Store
-┣ 📂test
-┃ ┗ 📂java
-┃ ┃ ┗ 📂com
-┃ ┃ ┃ ┗ 📂example
-┃ ┃ ┃ ┃ ┗ 📂server
-┃ ┃ ┃ ┃ ┃ ┗ 📜ServerApplicationTests.java
-┗ 📜.DS_Store
+📦src <br/>
+┣ 📂main <br/>
+┃ ┣ 📂java <br/>
+┃ ┃ ┣ 📂com <br/>
+┃ ┃ ┃ ┣ 📂example <br/>
+┃ ┃ ┃ ┃ ┣ 📂server <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂audit <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜DateAudit.java // 데이터 생성되는 날짜 기록을 위해 생성한 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂config <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuditingConfig.java // Authentication 심사?를 위한 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.java // spring security configuration (설정) 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜WebMvcConfig.java // CORS 설정을 위한 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂controller <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthController.java // signin, signup fetch Controller <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestController.java // 답변이 완료된 문의에 대한 Controller <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestController.java // 문의 생성,삭제,조회 등에 대한 Controller <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java // email 중복 validation 여부, 현재 로그인한 유저 정보를 반환해주는 Controller <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂exception <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AppException.java // Application 에서 서버에러가 발생 할 때, 공통적으로 Exception 낼 수 있는 클래스<br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BadRequestException.java // 요청받는 Parameter가 적절하지 않을 때 발생되는 Exception 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ResourceNotFoundException.java // 조회하는 데이터가 없을 때 발생되는 Exception 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂model <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequest.java // 완료된 문의 정보에 대한 model <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java // 기본 문의 정보에 대한 model <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java // 유저의 Role <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleName.java // Role 종류 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java // 로그인 한, 유저 정보 <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂payload <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ApiResponse.java // Client 에게 공통적으로 반환할 내용을 담고 있는 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRequest.java // Client로 부터 답변이 완료된 문의에 대해 요청 받을 때, 전달 받는 property값 설정 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestResponse.java // Client로 응답을 보낼 때, 담겨야할 property값 설정 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRequest.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestResponse.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationResponse.java // jwt token 값 설정/접근 클래스 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginRequest.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignUpRequest.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserIdentityAvailability.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSummary.java <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂repository <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRepository.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRepository.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleRepository.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂security <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CurrentUser.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationEntryPoint.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationFilter.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtTokenProvider.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserPrincipal.java <br/>
+┃ ┃ ┃ ┃ ┃ ┣ 📂service <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestService.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetailsService.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CustomerRequestService.java <br/>
+┃ ┃ ┃ ┃ ┃ ┗ 📜ServerApplication.java // Main Class<br/>
+┃ ┃ ┃ ┃ ┗ 📜.DS_Store <br/>
+┃ ┃ ┃ ┗ 📜.DS_Store <br/>
+┃ ┃ ┗ 📜.DS_Store <br/>
+┃ ┣ 📂resources <br/>
+┃ ┃ ┣ 📂static <br/>
+┃ ┃ ┣ 📂templates <br/>
+┃ ┃ ┣ 📜application.properties // Application 환경 상수? 설정 <br/>
+┃ ┃ ┣ 📜data.sql // 기본 데이터 설정 <br/>
+┃ ┃ ┗ 📜schema.sql // 기본 테이블 설정 <br/>
+┃ ┗ 📜.DS_Store <br/>
+┣ 📂test <br/>
+┃ ┗ 📂java <br/>
+┃ ┃ ┗ 📂com <br/>
+┃ ┃ ┃ ┗ 📂example <br/>
+┃ ┃ ┃ ┃ ┗ 📂server <br/>
+┃ ┃ ┃ ┃ ┃ ┗ 📜ServerApplicationTests.java <br/>
+┗ 📜.DS_Store <br/>
 
 ---
 
