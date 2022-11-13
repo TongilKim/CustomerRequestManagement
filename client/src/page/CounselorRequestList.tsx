@@ -102,11 +102,13 @@ export default function CounselorRequestList() {
           {newCustomerRequestList.length > 0
             ? newCustomerRequestList.map((request, idx) => {
                 return (
-                  <NewCounselorRequest
-                    key={idx}
-                    data={request}
-                    dataIdx={idx + 1}
-                  />
+                  !request.answered && (
+                    <NewCounselorRequest
+                      key={idx}
+                      data={request}
+                      dataIdx={idx + 1}
+                    />
+                  )
                 );
               })
             : null}

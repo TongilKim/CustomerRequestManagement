@@ -82,42 +82,28 @@ export default function WritingModal({
           counselorId: selectedRequestInfo.counselorId,
         }).then((res: TRequestResponse | null) => {
           if (res?.success) {
-            // delete 답변한 문의
-            deleteCustomerRequestAPI({
-              customerId: selectedRequestInfo.customerId,
-              requestId: selectedRequestInfo.id,
-            }).then(
-              (
-                res: {
-                  success: boolean;
-                  message: string;
-                  resultData: TCustomerRequest[];
-                } | null
-              ) => {
-                if (res?.success) {
-                  const newRequestsAfterDelete = newCustomerRequestList.filter(
-                    (request) => {
-                      return request.id !== selectedRequestInfo.id;
-                    }
-                  );
-
-                  dispatch(setNewCustomerRequestList(newRequestsAfterDelete));
-
-                  //fetch 답변한 문의 리스트
-                  getAllCompletedRequestByCounselor(
-                    Number(localStorage.getItem("currentCounselorId"))
-                  ).then((res: TRequestResponse | null) => {
-                    if (res?.success) {
-                      dispatch(
-                        setCompletedRequestListForCounselor(
-                          res.resultData as TCompletedCustomerRequest[]
-                        )
-                      );
-                    }
-                  });
-                }
+            // 새로운문의 리스트 에서 답변한 문의 제거
+            const newRequestsAfterDelete = newCustomerRequestList.filter(
+              (request) => {
+                return request.id !== selectedRequestInfo.id;
               }
             );
+
+            dispatch(setNewCustomerRequestList(newRequestsAfterDelete));
+
+            //fetch 답변한 문의 리스트
+            getAllCompletedRequestByCounselor(
+              Number(localStorage.getItem("currentCounselorId"))
+            ).then((res: TRequestResponse | null) => {
+              if (res?.success) {
+                dispatch(
+                  setCompletedRequestListForCounselor(
+                    res.resultData as TCompletedCustomerRequest[]
+                  )
+                );
+              }
+            });
+
             dispatch(setOpenSnackBar(true));
             dispatch(setSnackBarMsg(res.message));
           } else {

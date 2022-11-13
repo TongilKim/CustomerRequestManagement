@@ -31,7 +31,7 @@ public class CustomerRequestService {
         customerRequest.setTitle(customerRequestRequest.getTitle());
         customerRequest.setPending(false);
         customerRequest.setAnswered(false);
-        
+
         Instant now = Instant.now();
         customerRequest.setCreatedDateTime(now);
 
@@ -62,7 +62,7 @@ public class CustomerRequestService {
         try {
             CustomerRequest customerRequestToUpdate = customerRequestRepository.findById(requestId).orElse(null);
 
-            if(customerRequestToUpdate != null && !customerRequestToUpdate.getPending()) {
+            if(customerRequestToUpdate != null && customerRequestToUpdate.getPending()) {
                 customerRequestToUpdate.setAnswered(true);
                 
                 customerRequestRepository.save(customerRequestToUpdate);

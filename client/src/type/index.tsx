@@ -13,6 +13,7 @@ export type TCustomerRequest = {
   deleted: boolean;
   pending: boolean;
   createdDateTime: string;
+  answered: boolean;
 };
 
 export type TCompletedCustomerRequest = {
