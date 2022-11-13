@@ -110,17 +110,17 @@
 ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ApiResponse.java // Client 에게 공통적으로 반환할 내용을 담고 있는 클래스 <br/>
 ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRequest.java // Client로 부터 답변이 완료된 문의에 대해 요청 받을 때, 전달 받는 property값 설정 클래스 <br/>
 ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestResponse.java // Client로 응답을 보낼 때, 담겨야할 property값 설정 클래스 <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRequest.java <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestResponse.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRequest.java // 기본 문의정보 조회에 대한 property값 설정<br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestResponse.java // 기본 문의정보 응답에 대한 property값 설정 <br/>
 ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationResponse.java // jwt token 값 설정/접근 클래스 <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginRequest.java <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignUpRequest.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginRequest.java // login 할 때 요구되는 property값 <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignUpRequest.java // sign up 할 때 요구되는 property값 <br/>
 ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserIdentityAvailability.java <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSummary.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSummary.java // 로그인한 유저에 대한 property <br/>
 ┃ ┃ ┃ ┃ ┃ ┣ 📂repository <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRepository.java <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java <br/>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRepository.java <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRepository.java // 완료된 문의 리스트를 접근 할 수 있는 repository <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java // 기본 문의에 대한 내용을 접근 할 수 있는 repository <br/>
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRepository.java // 특정 고객의 문의 내용 & 리스트를 접근 할 수 있는 repo <br/>
 ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleRepository.java <br/>
 ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java <br/>
 ┃ ┃ ┃ ┃ ┃ ┣ 📂security <br/>
@@ -157,6 +157,10 @@
 <br/>
 
 # 실행 방법
+
+## `npm install`
+
+앱을 실행하기 전에 package module을 설치 해야 합니다.
 
 ## `npm start`
 
