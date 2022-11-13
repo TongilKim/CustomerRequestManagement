@@ -18,7 +18,7 @@ type TSignUp = {
 };
 export const signUpAPI = async (signUpParam: TSignUp) => {
   let data: { success: boolean; message: string } | null = null;
-  let headers = getHeaderInfo();
+  const headers = getHeaderInfo();
 
   try {
     await fetch(`${API_BASE_URL}/auth/signup`, {
@@ -53,7 +53,7 @@ type TSignIn = {
 export const signInAPI = async (signInParam: TSignIn) => {
   let data: { success: boolean; message: string; accessToken?: string } | null =
     null;
-  let headers = getHeaderInfo();
+  const headers = getHeaderInfo();
 
   try {
     await fetch(`${API_BASE_URL}/auth/signin`, {
@@ -90,7 +90,7 @@ export const signInAPI = async (signInParam: TSignIn) => {
 
 export const checkEmailAvailabilityAPI = async (email: string) => {
   let exist = false;
-  let headers = getHeaderInfo();
+  const headers = getHeaderInfo();
 
   try {
     await fetch(`${API_BASE_URL}/user/checkEmailAvailability?email=${email}`, {
@@ -118,7 +118,7 @@ export const createNewCustomerRequestAPI = async (
   newCustomerRequest: TNewCustomerRequest
 ) => {
   let data: { success: boolean; message: string } | null = null;
-  let headers = getHeaderInfo();
+  const headers = getHeaderInfo();
 
   try {
     await fetch(`${API_BASE_URL}/customerRequests`, {
@@ -136,12 +136,12 @@ export const createNewCustomerRequestAPI = async (
   return data;
 };
 
-export const getAllSpecificCustomerRequestsAPI = async (customerId: string) => {
+export const getAllAvailableCustomerRequestsAPI = async () => {
   let data: TCustomerRequest[] | null = null;
-  let headers = getHeaderInfo();
+  const headers = getHeaderInfo();
 
   try {
-    await fetch(`${API_BASE_URL}/customerRequests?customerId=${customerId}`, {
+    await fetch(`${API_BASE_URL}/customerRequests/allRequests`, {
       method: "GET",
       headers: headers,
     })
@@ -153,5 +153,48 @@ export const getAllSpecificCustomerRequestsAPI = async (customerId: string) => {
   } catch (error) {
     data = null;
   }
+  return data;
+};
+
+export const getAllSpecificCustomerRequestsAPI = async (customerId: string) => {
+  let data: TCustomerRequest[] | null = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(`${API_BASE_URL}/customerRequests?customerId=${customerId}`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
+  return data;
+};
+
+export const deleteCustomerRequestAPI = async (param: {
+  customerId: string;
+  requestId: number;
+}) => {
+  let data = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(
+      `${API_BASE_URL}/customerRequests?customerId=${param.customerId}&requestId=${param.requestId}`,
+      { method: "DELETE", headers: headers }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res: ", res);
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
+
   return data;
 };

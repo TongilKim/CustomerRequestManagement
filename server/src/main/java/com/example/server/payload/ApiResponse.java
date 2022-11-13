@@ -1,14 +1,24 @@
 package com.example.server.payload;
 
+import java.util.List;
+
+import com.example.server.model.CustomerRequest;
+
 public class ApiResponse {
     private Boolean success;
     private String message;
-
+    private List<CustomerRequest> resultData;
+    
     public ApiResponse(Boolean success, String message) {
         this.success = success;
         this.message = message;
     }
-
+    
+    public ApiResponse(Boolean success, String message, List<CustomerRequest> resultData) {
+        this.success = success;
+        this.message = message;
+        this.resultData = resultData;
+    }
     public Boolean getSuccess() {
         return success;
     }
@@ -24,4 +34,14 @@ public class ApiResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public List<CustomerRequest> getResultData() {
+        return resultData;
+    }
+
+    public void setResultData(List<CustomerRequest> resultData) {
+        this.resultData = resultData;
+    }
+
+    
 }

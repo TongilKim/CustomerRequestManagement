@@ -11,4 +11,6 @@ public interface CustomerRequestRepository extends JpaRepository<CustomerRequest
     Optional<CustomerRequest> findById(Long requestId);
 
     List<CustomerRequest> findByCustomerId(String customerId);
+
+    void deleteById(Long requestId);
 }

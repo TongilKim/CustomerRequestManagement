@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,8 +51,36 @@ public class CustomerRequestController {
     }
 
     @GetMapping
-    public List<CustomerRequest> getAllCustomerRequests(@RequestParam(value = "customerId") String customerId) {
+    public ApiResponse getAllCustomerRequests(@RequestParam(value = "customerId") String customerId) {
+        List<CustomerRequest> allRequestList = customerRequestService.getAllSpecificCustomerRequests(customerId);
+        if(allRequestList.isEmpty()) {
+            return new ApiResponse(false, "조회 가능한 목록이 없습니다.", allRequestList);
+        } else {
+            return new ApiResponse(true, "문의가 성공적으로 접수 되었습니다.", allRequestList);
+        }
         
-        return customerRequestService.getAllSpecificCustomerRequests(customerId);
     }
+
+    @DeleteMapping
+    public ApiResponse deleteCustomerRequest(@RequestParam(value = "requestId") Long requestId,
+                                             @RequestParam(value = "customerId") String customerId) {
+
+         Boolean deleteStatus = customerRequestService.deleteCustomerRequest(requestId);
+         if(deleteStatus) {
+            List<CustomerRequest> newRequestList = customerRequestService.getAllSpecificCustomerRequests(customerId);
+            return new ApiResponse(true, "문의가 성공적으로 삭제 되었습니다.", newRequestList);        
+         } else {
+            return new ApiResponse(false, "삭제 하려는 데이터가 존재하지 않습니다.");
+         }
+
+    }
+
+    @GetMapping("/allRequests")
+    public ApiResponse getAllAvailableCustomerRequests() {
+        List<CustomerRequest> allCustomerRequests = customerRequestService.getAllCustomerRequests();
+
+        return new ApiResponse(true, "목록이 성공적으로 조회 되었습니다.", allCustomerRequests);
+    }
+
+
 }

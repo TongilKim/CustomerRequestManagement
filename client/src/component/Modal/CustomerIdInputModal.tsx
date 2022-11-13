@@ -27,24 +27,41 @@ export default function CustomerIdInputModal({
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const getRequests = () => {
+    console.log("hi");
     getAllSpecificCustomerRequestsAPI(customerId).then(
-      (res: TCustomerRequest[] | null) => {
+      (
+        res: {
+          success: boolean;
+          message: string;
+          resultData: TCustomerRequest[];
+        } | null
+      ) => {
         setIsLoading(false);
         closeModal();
 
-        if (res && res.length > 0) {
+        if (res && res.success) {
+          dispatch(setSpecificCustomerRequestList(res.resultData));
           navigate("/lookupWrittenRequests");
-          dispatch(setSpecificCustomerRequestList(res));
         } else {
-          dispatch(setOpenSnackBar(true));
-          dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
+          if (res?.message) {
+            dispatch(setOpenSnackBar(true));
+            dispatch(setSnackBarMsg(res.message));
+          } else {
+            dispatch(setOpenSnackBar(true));
+            dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
+          }
         }
       }
     );
   };
+  //   const onSubmit = (
+  //     e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>
+  //   ) => {
+  //     e.preventDefault();
+
+  //     getRequests();
+  //   };
 
   if (isLoading) return <Loader />;
 
@@ -59,35 +76,48 @@ export default function CustomerIdInputModal({
         }}
       >
         <div className={style.modal_container}>
-          <form
-            onSubmit={(e) => {
-              onSubmit(e);
+          <button
+            className={style.modal_close_btn}
+            onClick={() => {
+              closeModal();
             }}
           >
-            <button
-              className={style.modal_close_btn}
-              onClick={() => {
-                closeModal();
-              }}
-            >
-              X
-            </button>
+            X
+          </button>
 
-            <div>
-              <div className={style.title}>조회할 고객 ID</div>
-              <input
-                type="text"
-                value={customerId}
-                className={style.idInput}
-                onChange={(e) => {
-                  setCustomerId(e.target.value);
+          <div>
+            <div className={style.title}>조회할 고객 ID</div>
+            <input
+              type="text"
+              value={customerId}
+              autoFocus
+              className={style.idInput}
+              onChange={(e) => {
+                setCustomerId(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (customerId.length > 0) {
+                    getRequests();
+                  }
+                }
+                if (e.key === "Escape") {
+                  closeModal();
+                }
+              }}
+            />
+            <div className={style.buttonContainer}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  getRequests();
                 }}
-              />
-              <div className={style.buttonContainer}>
-                <input type="submit" value="조회" />
-              </div>
+              >
+                조회
+              </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </Fragment>,

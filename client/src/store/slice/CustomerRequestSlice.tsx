@@ -8,10 +8,12 @@ import { TCustomerRequest } from "../../type";
 
 type TinitialState = {
   specificCustomerRequestList: TCustomerRequest[];
+  newCustomerRequestList: TCustomerRequest[];
 };
 
 const initialState: TinitialState = {
   specificCustomerRequestList: [],
+  newCustomerRequestList: [],
 };
 
 const snackbarSlice = createSlice({
@@ -24,8 +26,15 @@ const snackbarSlice = createSlice({
     ) {
       state.specificCustomerRequestList = action.payload;
     },
+    setNewCustomerRequestList(
+      state,
+      action: PayloadAction<TCustomerRequest[]>
+    ) {
+      state.newCustomerRequestList = action.payload;
+    },
   },
 });
 
-export const { setSpecificCustomerRequestList } = snackbarSlice.actions;
+export const { setSpecificCustomerRequestList, setNewCustomerRequestList } =
+  snackbarSlice.actions;
 export default snackbarSlice.reducer;
