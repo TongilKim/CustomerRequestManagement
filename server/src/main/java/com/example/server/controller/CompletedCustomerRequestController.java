@@ -60,4 +60,14 @@ public class CompletedCustomerRequestController {
         }
     }
 
+    @GetMapping("/byCustomer")
+    public ApiResponse getAllCompletedCustomerRequestByCustomerId(@RequestParam(value = "customerId") String customerId) {
+        List<CompletedCustomerRequest> allCompletedRequestList = completedCustomerRequestService.getAllRequestsByCustomerId(customerId);
+
+        if(allCompletedRequestList.isEmpty()) {
+            return new ApiResponse(false, "조회 가능한 목록이 없습니다.", allCompletedRequestList);
+        } else {
+            return new ApiResponse(true, "문의가 성공적으로 조회 되었습니다.", allCompletedRequestList);
+        }
+    }
 }

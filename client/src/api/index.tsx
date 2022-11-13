@@ -291,3 +291,26 @@ export const getAllCompletedRequestByCounselor = async (
   }
   return data;
 };
+
+export const getAllCompletedRequestByCustomer = async (customerId: string) => {
+  let data: TRequestResponse | null = null;
+  const headers = getHeaderInfo();
+
+  try {
+    await fetch(
+      `${API_BASE_URL}/completedCustomerRequests/byCustomer?customerId=${customerId}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res: ", res);
+        data = res;
+      });
+  } catch (error) {
+    data = null;
+  }
+  return data;
+};

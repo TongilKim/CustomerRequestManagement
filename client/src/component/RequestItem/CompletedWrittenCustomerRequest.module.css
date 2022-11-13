@@ -1,0 +1,67 @@
+.wrapper {
+  background-color: white;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border: 3px solid white;
+  border-radius: 5px;
+}
+
+.titleSection {
+  display: flex;
+
+  align-items: center;
+  padding: 10px 28px;
+  background-color: #fafafa;
+}
+
+.titleSection .titleNum {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #333333;
+}
+
+.titleSection .title {
+  margin-left: 32px;
+  width: 100%;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: #333333;
+}
+
+.requestDescription {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 24px 16px;
+}
+.writtenDate {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 21px;
+  font-weight: 400;
+  color: #333333;
+}
+.answeredDate {
+  text-align: right;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: #333333;
+}
+.detailDescription {
+  padding: 24px 16px;
+  font-style: italic;
+}
+.expandDetail {
+  border-top: 1px solid #959595;
+  display: flex;
+  justify-content: flex-end;
+  padding: 7px 0px;
+  cursor: pointer;
+}
+.expandDetail img {
+  width: 20px;
+}

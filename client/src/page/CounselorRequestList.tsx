@@ -86,7 +86,7 @@ export default function CounselorRequestList() {
       </div>
       <Fragment>
         <RequestList title="답변한 문의">
-          {completedRequestListForCounselor.length > 0
+          {completedRequestListForCounselor?.length > 0
             ? completedRequestListForCounselor.map((request, idx) => {
                 return (
                   <CompletedCounselorRequest
@@ -99,7 +99,7 @@ export default function CounselorRequestList() {
             : null}
         </RequestList>
         <RequestList title="새로운 문의">
-          {newCustomerRequestList.length > 0
+          {newCustomerRequestList?.length > 0
             ? newCustomerRequestList.map((request, idx) => {
                 return (
                   !request.answered && (

@@ -41,4 +41,12 @@ public class CompletedCustomerRequestService {
                                                  .filter((completedReq) -> completedReq.getCounselorId().equals(counselorId))
                                                  .collect(Collectors.toList());
     }
+
+    public List<CompletedCustomerRequest> getAllRequestsByCustomerId(String customerId) {
+
+        return completedCustomerRequestRepository.findAll()
+                                                 .stream()
+                                                 .filter((completedReq) -> completedReq.getCustomerId().equals(customerId))
+                                                 .collect(Collectors.toList());
+    }
 }

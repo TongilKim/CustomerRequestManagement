@@ -1,14 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RequestList from "../component/RequestList/RequestList";
-import CustomerRequest from "../component/RequestItem/CustomerRequest";
+import WrittenCustomerRequest from "../component/RequestItem/WrittenCustomerRequest";
 import style from "./CustomerRequestList.module.css";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getAllSpecificCustomerRequestsAPI } from "../api";
+import {
+  getAllCompletedRequestByCustomer,
+  getAllSpecificCustomerRequestsAPI,
+} from "../api";
 import { setSpecificCustomerRequestList } from "../store/slice/CustomerRequestSlice";
 import { setOpenSnackBar, setSnackBarMsg } from "../store/slice/SnackBarSlice";
-import { TCustomerRequest } from "../type";
+import { TCompletedCustomerRequest, TCustomerRequest } from "../type";
 import Loader from "../common/Loader";
+import { setCompletedRequestListForCustomer } from "../store/slice/CompletedCustomerRequestSlice";
+import CompletedWrittenCustomerRequest from "../component/RequestItem/CompletedWrittenCustomerRequest";
 
 export default function CustomerRequestList() {
   // STORE STATE
@@ -16,46 +21,70 @@ export default function CustomerRequestList() {
   const { specificCustomerRequestList } = useAppSelector(
     (state) => state.customerRequest
   );
-
+  const { completedRequestListForCustomer } = useAppSelector(
+    (state) => state.completedCustomerRequest
+  );
   // LOCAL STATE
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const customerId = localStorage.getItem("customerId");
+  const fetchAllCompletedRequests = async () => {
+    const customerId = localStorage.getItem("customerId");
 
-      if (customerId) {
-        getAllSpecificCustomerRequestsAPI(customerId).then(
-          (
-            res: {
-              success: boolean;
-              message: string;
-              resultData: TCustomerRequest[];
-            } | null
-          ) => {
-            setIsLoading(false);
+    if (customerId) {
+      await getAllCompletedRequestByCustomer(customerId).then(
+        (
+          res: {
+            success: boolean;
+            message: string;
+            resultData: TCompletedCustomerRequest[];
+          } | null
+        ) => {
+          if (res?.success) {
+            dispatch(setCompletedRequestListForCustomer(res.resultData));
+          }
+        }
+      );
+    }
+  };
 
-            if (res?.success) {
-              dispatch(setSpecificCustomerRequestList(res.resultData));
-              navigate("/lookupWrittenRequests");
+  const fetchAllWrritenCustomerRequests = async () => {
+    const customerId = localStorage.getItem("customerId");
+
+    if (customerId) {
+      await getAllSpecificCustomerRequestsAPI(customerId).then(
+        (
+          res: {
+            success: boolean;
+            message: string;
+            resultData: TCustomerRequest[];
+          } | null
+        ) => {
+          setIsLoading(false);
+
+          if (res?.success) {
+            dispatch(setSpecificCustomerRequestList(res.resultData));
+            navigate("/lookupWrittenRequests");
+          } else {
+            if (res?.message) {
+              dispatch(setOpenSnackBar(true));
+              dispatch(setSnackBarMsg(res.message));
             } else {
-              if (res?.message) {
-                dispatch(setOpenSnackBar(true));
-                dispatch(setSnackBarMsg(res.message));
-              } else {
-                dispatch(setOpenSnackBar(true));
-                dispatch(
-                  setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다.")
-                );
-              }
+              dispatch(setOpenSnackBar(true));
+              dispatch(
+                setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다.")
+              );
             }
           }
-        );
-      }
-    };
-    fetchData();
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchAllCompletedRequests();
+    fetchAllWrritenCustomerRequests();
   }, []);
 
   if (isLoading) return <Loader />;
@@ -72,18 +101,29 @@ export default function CustomerRequestList() {
       </div>
       <Fragment>
         <RequestList title="답변된 문의">
-          {/* <CustomerRequest answered={false} data={null} /> */}
-        </RequestList>
-        <RequestList title="작성한 문의">
-          {specificCustomerRequestList.length > 0
-            ? specificCustomerRequestList.map((request, idx) => {
+          {completedRequestListForCustomer?.length > 0
+            ? completedRequestListForCustomer.map((request, idx) => {
                 return (
-                  <CustomerRequest
+                  <CompletedWrittenCustomerRequest
                     key={idx}
-                    answered={false}
                     data={request}
                     dataIdx={idx + 1}
                   />
+                );
+              })
+            : null}
+        </RequestList>
+        <RequestList title="작성한 문의">
+          {specificCustomerRequestList?.length > 0
+            ? specificCustomerRequestList.map((request, idx) => {
+                return (
+                  !request.answered && (
+                    <WrittenCustomerRequest
+                      key={idx}
+                      data={request}
+                      dataIdx={idx + 1}
+                    />
+                  )
                 );
               })
             : null}

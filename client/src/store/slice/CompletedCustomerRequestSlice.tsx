@@ -8,10 +8,12 @@ import { TCompletedCustomerRequest } from "../../type";
 
 type TInitialState = {
   completedRequestListForCounselor: TCompletedCustomerRequest[];
+  completedRequestListForCustomer: TCompletedCustomerRequest[];
 };
 
 const initialState: TInitialState = {
   completedRequestListForCounselor: [],
+  completedRequestListForCustomer: [],
 };
 
 const completedRequestSlice = createSlice({
@@ -24,9 +26,17 @@ const completedRequestSlice = createSlice({
     ) {
       state.completedRequestListForCounselor = action.payload;
     },
+    setCompletedRequestListForCustomer(
+      state,
+      action: PayloadAction<TCompletedCustomerRequest[]>
+    ) {
+      state.completedRequestListForCustomer = action.payload;
+    },
   },
 });
 
-export const { setCompletedRequestListForCounselor } =
-  completedRequestSlice.actions;
+export const {
+  setCompletedRequestListForCounselor,
+  setCompletedRequestListForCustomer,
+} = completedRequestSlice.actions;
 export default completedRequestSlice.reducer;
