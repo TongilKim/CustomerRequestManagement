@@ -79,7 +79,88 @@
 
 ## `Server`
 
+📦src
+┣ 📂main
+┃ ┣ 📂java
+┃ ┃ ┣ 📂com
+┃ ┃ ┃ ┣ 📂example
+┃ ┃ ┃ ┃ ┣ 📂server
+┃ ┃ ┃ ┃ ┃ ┣ 📂audit
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜DateAudit.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂config
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuditingConfig.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜WebMvcConfig.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂exception
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AppException.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BadRequestException.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ResourceNotFoundException.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂model
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleName.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂payload
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ApiResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignUpRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserIdentityAvailability.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSummary.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomerRequestRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RoleRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂security
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CurrentUser.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationEntryPoint.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationFilter.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtTokenProvider.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserPrincipal.java
+┃ ┃ ┃ ┃ ┃ ┣ 📂service
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CompletedCustomerRequestService.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetailsService.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CustomerRequestService.java
+┃ ┃ ┃ ┃ ┃ ┗ 📜ServerApplication.java
+┃ ┃ ┃ ┃ ┗ 📜.DS_Store
+┃ ┃ ┃ ┗ 📜.DS_Store
+┃ ┃ ┗ 📜.DS_Store
+┃ ┣ 📂resources
+┃ ┃ ┣ 📂static
+┃ ┃ ┣ 📂templates
+┃ ┃ ┣ 📜application.properties
+┃ ┃ ┣ 📜data.sql
+┃ ┃ ┗ 📜schema.sql
+┃ ┗ 📜.DS_Store
+┣ 📂test
+┃ ┗ 📂java
+┃ ┃ ┗ 📂com
+┃ ┃ ┃ ┗ 📂example
+┃ ┃ ┃ ┃ ┗ 📂server
+┃ ┃ ┃ ┃ ┃ ┗ 📜ServerApplicationTests.java
+┗ 📜.DS_Store
+
+---
+
+<br/>
+
 # 실행 방법
+
+## `npm start`
+
+로컬에서 앱을 실행합니다.
 
 ## `npm run dev`
 
@@ -101,6 +182,8 @@
 
 ## `기술 스택`
 
+--- ### `Client` ### ---
+
 ### redux-toolkit
 
 - client state 관리를 위해 적용.
@@ -117,3 +200,25 @@
 ---
 
 <br/>
+
+--- ### `Server` ### ---
+
+### spring-security
+
+- Application 회원가입&로그인 보안/인증을 위해 적용.
+
+### jjwt-api
+
+- jwt token 생성/응답 등 jwt 업무를 위해 적용.
+
+### jackson-datatype-jsr310
+
+- 데이터 생성 시간을 기록하기 위해 적용.
+
+### h2-database
+
+- 임시 데이터 저장을 위해 사용.
+
+### spring-boot-starter-data-jpa
+
+- 데이터를 접근 하고 관리 하기위해 사용.
