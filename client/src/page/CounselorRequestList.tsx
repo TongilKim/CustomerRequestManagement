@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   getAllAvailableCustomerRequestsAPI,
@@ -7,6 +7,7 @@ import {
 import CompletedCounselorRequest from "../component/RequestItem/CompletedCounselorRequest";
 import NewCounselorRequest from "../component/RequestItem/NewCounselorRequest";
 import RequestList from "../component/RequestList/RequestList";
+import { useInterval } from "../hook";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setCompletedRequestListForCounselor } from "../store/slice/CompletedCustomerRequestSlice";
 import { setNewCustomerRequestList } from "../store/slice/CustomerRequestSlice";
@@ -26,7 +27,7 @@ export default function CounselorRequestList() {
   // LOCAL STATE
   const navigate = useNavigate();
 
-  const fetchAllAvailableRequests = async () => {
+  const fetchAllAvailableRequests = useCallback(async () => {
     await getAllAvailableCustomerRequestsAPI().then(
       (
         res: {
@@ -49,9 +50,9 @@ export default function CounselorRequestList() {
         }
       }
     );
-  };
+  }, []);
 
-  const fetchAllCompletedRequests = async () => {
+  const fetchAllCompletedRequests = useCallback(async () => {
     await getAllCompletedRequestByCounselor(
       Number(localStorage.getItem("currentCounselorId"))
     ).then(
@@ -67,12 +68,16 @@ export default function CounselorRequestList() {
         }
       }
     );
-  };
+  }, []);
 
   useEffect(() => {
     fetchAllCompletedRequests();
     fetchAllAvailableRequests();
   }, []);
+
+  useInterval(() => {
+    return fetchAllAvailableRequests();
+  }, 10000);
 
   return (
     <div className={style.wrapper}>
@@ -88,13 +93,7 @@ export default function CounselorRequestList() {
         <RequestList title="답변한 문의">
           {completedRequestListForCounselor?.length > 0
             ? completedRequestListForCounselor.map((request, idx) => {
-                return (
-                  <CompletedCounselorRequest
-                    key={idx}
-                    data={request}
-                    dataIdx={idx + 1}
-                  />
-                );
+                return <CompletedCounselorRequest key={idx} data={request} />;
               })
             : null}
         </RequestList>
@@ -103,11 +102,7 @@ export default function CounselorRequestList() {
             ? newCustomerRequestList.map((request, idx) => {
                 return (
                   !request.answered && (
-                    <NewCounselorRequest
-                      key={idx}
-                      data={request}
-                      dataIdx={idx + 1}
-                    />
+                    <NewCounselorRequest key={idx} data={request} />
                   )
                 );
               })

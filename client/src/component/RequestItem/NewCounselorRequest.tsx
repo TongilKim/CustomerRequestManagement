@@ -14,13 +14,11 @@ import Loader from "../../common/Loader";
 import { setNewCustomerRequestList } from "../../store/slice/CustomerRequestSlice";
 
 type TProps = {
-  dataIdx: number;
   data: TCustomerRequest;
 };
-export default function NewCounselorRequest({ data, dataIdx }: TProps) {
+export default function NewCounselorRequest({ data }: TProps) {
   // STORE STATE
   const dispatch = useAppDispatch();
-
   // LOCAL STATE
   const [openWritingModal, setOpenWritingModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,16 +41,18 @@ export default function NewCounselorRequest({ data, dataIdx }: TProps) {
           resultData: TCustomerRequest[];
         } | null
       ) => {
-        setIsLoading(false);
-
         if (res?.message) {
-          dispatch(setNewCustomerRequestList(res.resultData));
+          if (res.resultData) {
+            dispatch(setNewCustomerRequestList(res.resultData));
+          }
+          setIsLoading(false);
           dispatch(setOpenSnackBar(true));
           dispatch(setSnackBarMsg(res.message));
         } else {
           dispatch(setOpenSnackBar(true));
           dispatch(setSnackBarMsg("API 요청으로 부터 문제가 발생 했습니다."));
         }
+        setIsLoading(false);
       }
     );
   };
@@ -67,7 +67,6 @@ export default function NewCounselorRequest({ data, dataIdx }: TProps) {
       }}
     >
       <div className={style.titleSection}>
-        <div className={style.titleNum}>{dataIdx}</div>
         <div className={style.title}>{data.title}</div>
         <div className={style.optionGroup}>
           <div

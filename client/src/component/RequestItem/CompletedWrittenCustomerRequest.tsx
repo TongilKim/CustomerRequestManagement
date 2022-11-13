@@ -5,20 +5,15 @@ import ArrowDownSvg from "../../assets/arrow_down.svg";
 import ArrowUpSvg from "../../assets/arrow_up.svg";
 
 type TProps = {
-  dataIdx: number;
   data: TCompletedCustomerRequest;
 };
-export default function CompletedWrittenCustomerRequest({
-  dataIdx,
-  data,
-}: TProps) {
+export default function CompletedWrittenCustomerRequest({ data }: TProps) {
   // LOCAL STATE
   const [openDetail, setOpenDetail] = useState(false);
 
   return (
     <div className={style.wrapper}>
       <div className={style.titleSection}>
-        <div className={style.titleNum}>{dataIdx}</div>
         <div className={style.title}>{data.title}</div>
       </div>
       {/* titleSection END */}

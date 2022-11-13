@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./WrittenCustomerRequest.module.css";
-import AdditionSvg from "../../assets/addition.svg";
 import DeleteSvg from "../../assets/delete.svg";
-import ArrowDownSvg from "../../assets/arrow_down.svg";
-import ArrowUpSvg from "../../assets/arrow_up.svg";
 import { TCustomerRequest } from "../../type";
 import { useAppDispatch } from "../../store/hooks";
 import { deleteCustomerRequestAPI } from "../../api";
@@ -14,15 +11,11 @@ import {
 } from "../../store/slice/SnackBarSlice";
 
 type TProps = {
-  dataIdx: number;
   data: TCustomerRequest;
 };
-export default function WrittenCustomerRequest({ data, dataIdx }: TProps) {
+export default function WrittenCustomerRequest({ data }: TProps) {
   // STORE STATE
   const dispatch = useAppDispatch();
-
-  // LOCAL STATE
-  const [openDetail, setOpenDetail] = useState(false);
 
   const onClickDeleteCustomerRequest = (requestInfo: TCustomerRequest) => {
     deleteCustomerRequestAPI({
@@ -55,7 +48,6 @@ export default function WrittenCustomerRequest({ data, dataIdx }: TProps) {
   return (
     <div className={style.wrapper}>
       <div className={style.titleSection}>
-        <div className={style.titleNum}>{dataIdx}</div>
         <div className={style.title}>{data.title}</div>
         <div className={style.optionGroup}>
           <div

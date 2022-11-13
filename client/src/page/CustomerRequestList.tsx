@@ -104,11 +104,7 @@ export default function CustomerRequestList() {
           {completedRequestListForCustomer?.length > 0
             ? completedRequestListForCustomer.map((request, idx) => {
                 return (
-                  <CompletedWrittenCustomerRequest
-                    key={idx}
-                    data={request}
-                    dataIdx={idx + 1}
-                  />
+                  <CompletedWrittenCustomerRequest key={idx} data={request} />
                 );
               })
             : null}
@@ -118,11 +114,7 @@ export default function CustomerRequestList() {
             ? specificCustomerRequestList.map((request, idx) => {
                 return (
                   !request.answered && (
-                    <WrittenCustomerRequest
-                      key={idx}
-                      data={request}
-                      dataIdx={idx + 1}
-                    />
+                    <WrittenCustomerRequest key={idx} data={request} />
                   )
                 );
               })
